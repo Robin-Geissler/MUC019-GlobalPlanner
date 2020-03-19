@@ -10,12 +10,15 @@
   <build_depend>nav_msgs</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>tufast_msgs</build_depend>
+  <build_depend>jsk_recognition_msgs</build_depend>
   <build_export_depend>nav_msgs</build_export_depend>
   <build_export_depend>tf</build_export_depend>
   <build_export_depend>tufast_msgs</build_export_depend>
+  <build_export_depend>jsk_recognition_msgs</build_export_depend>
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>tf</exec_depend>
   <exec_depend>tufast_msgs</exec_depend>
+  <exec_depend>jsk_recognition_msgs</exec_depend>
   
   <export>
   </export>

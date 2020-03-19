@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   tf
   tufast_msgs
+  jsk_recognition_msgs
 )
 
 catkin_package(
@@ -16,6 +17,7 @@ catkin_package(
     nav_msgs
     tf
     tufast_msgs
+    jsk_recognition_msgs
 )
 
 include_directories(
@@ -25,7 +27,6 @@ include_directories(
 
 add_executable(global_planner
     src/global_planner_node.cpp
-    src/global_planner.cpp
 )
 
 add_dependencies(global_planner
