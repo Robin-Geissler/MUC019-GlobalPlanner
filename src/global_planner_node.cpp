@@ -48,7 +48,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh) : _tfListener{_tfBuffer
     // publishers
     // ----------------------------------------
 
-    _pubGoalPoses = nh.advertise<tufast_msgs::GoalPoints>("goal_poses", 1);
+    _pubGoalPoses = nh.advertise<geometry_msgs::Pose>("goal_poses", 1);
     _pubPath = nh.advertise<nav_msgs::Path>("path", 1);
 }
 
