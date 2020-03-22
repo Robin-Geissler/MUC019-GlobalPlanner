@@ -4,6 +4,7 @@
   <version>0.0.0</version>
   <description>The global_planner package</description>
   <maintainer email="t.mueller@tufast.de">thilo</maintainer>
+  <maintainer email="geissler@tufast.de">robin</maintainer>
   <license>TODO</license>
   
   <buildtool_depend>catkin</buildtool_depend>

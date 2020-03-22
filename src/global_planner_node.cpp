@@ -4,28 +4,36 @@
 using namespace tufast_planner;
 
 int main(int argc, char *argv[]) {
+
+
+
+
   ros::init(argc, argv, "global_planner_node");
   ros::NodeHandle nodeHandle("~");
 
-  GlobalPlannerNode node(nodeHandle);
+  GlobalPlannerNode node(nodeHandle, ros::Rate(100));
 
-  
+  // -----------------------------------------
+  // run GlobalPlannerNode
+  // ----------------------------------------
 
-  ros::spin();
+  node.run();
+
 }
 
 
-GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh) : _tfListener{_tfBuffer} {
+GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
+        : _tfListener{_tfBuffer}, loop_rate(loop_rate) {
     
     // -----------------------------------------
     // subscribers
     // ----------------------------------------
+    // ~ muss hier eventuell weg
+    _subBoundingBoxes = nh.subscribe("bounding_boxes", 1000, &GlobalPlannerNode::boundingBoxCallback, this);
 
-    _subBoundingBoxes = nh.subscribe("~bounding_boxes", 1000, &GlobalPlannerNode::boundingBoxCallback, this);
+    _subOccupancyGridMap = nh.subscribe("map", 1000, &GlobalPlannerNode::occuGridMapCallback, this);
 
-    _subOccupancyGridMap = nh.subscribe("~map", 1000, &GlobalPlannerNode::occuGridMapCallback, this);
-
-    _subMissionStatus = nh.subscribe("~mission_status", 1000, &GlobalPlannerNode::missionStatusCallback, this);
+    _subMissionStatus = nh.subscribe("mission_status", 1000, &GlobalPlannerNode::missionStatusCallback, this);
     
     // -----------------------------------------
     // transform listener
@@ -50,6 +58,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh) : _tfListener{_tfBuffer
 
     _pubGoalPoses = nh.advertise<geometry_msgs::Pose>("goal_poses", 1);
     _pubPath = nh.advertise<nav_msgs::Path>("path", 1);
+
 }
 
 
@@ -57,13 +66,34 @@ GlobalPlannerNode::~GlobalPlannerNode() {}
 
 void GlobalPlannerNode::boundingBoxCallback(const jsk_recognition_msgs::BoundingBoxArray& msg) {
     ROS_INFO("Received a bounding box");
+    // TODO
 }
 
 void GlobalPlannerNode::occuGridMapCallback(const nav_msgs::OccupancyGrid& msg) {
     ROS_INFO("Received a map");
+    // TODO
 }
 
 void GlobalPlannerNode::missionStatusCallback(const tufast_msgs::MissionStatus& msg) {
     ROS_INFO("Received a mission status");
     _currentMission = (MissionType) msg.selectedMission;
+}
+
+void GlobalPlannerNode::run() {
+    // TODO
+    while(ros::ok()) {
+        // -----------------------------------------
+        // sensor fusion
+        // ----------------------------------------
+
+
+        // -----------------------------------------
+        // challenge response
+        // ----------------------------------------
+
+
+        ros::spinOnce();
+        this->loop_rate.sleep();
+    }
+
 }
