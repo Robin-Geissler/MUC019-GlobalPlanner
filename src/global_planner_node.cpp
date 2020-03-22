@@ -21,11 +21,11 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh) : _tfListener{_tfBuffer
     // subscribers
     // ----------------------------------------
 
-    _subBoundingBoxes = nh.subscribe("~bounding_boxes", 1000, &GlobalPlannerNode::boundingBoxCallback, this);
+    _subBoundingBoxes = nh.subscribe("bounding_boxes", 1000, &GlobalPlannerNode::boundingBoxCallback, this);
 
-    _subOccupancyGridMap = nh.subscribe("~map", 1000, &GlobalPlannerNode::occuGridMapCallback, this);
+    _subOccupancyGridMap = nh.subscribe("costmap", 1000, &GlobalPlannerNode::occuGridMapCallback, this);
 
-    _subMissionStatus = nh.subscribe("~mission_status", 1000, &GlobalPlannerNode::missionStatusCallback, this);
+    _subMissionStatus = nh.subscribe("mission_status", 1000, &GlobalPlannerNode::missionStatusCallback, this);
     
     // -----------------------------------------
     // transform listener
@@ -33,7 +33,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh) : _tfListener{_tfBuffer
 
     geometry_msgs::TransformStamped t;
     try {
-        t = _tfBuffer.lookupTransform("/map", "/base", ros::Time(0));
+        t = _tfBuffer.lookupTransform("map", "base", ros::Time(0));
         _currentPosition.position.x = t.transform.translation.x;
         _currentPosition.position.y = t.transform.translation.y;
         _currentPosition.position.z = t.transform.translation.z;
