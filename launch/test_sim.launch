@@ -1,0 +1,14 @@
+<launch>
+
+    <node pkg="global_planner" type="global_planner" name="global_planner" output="screen" respawn="false" respawn_delay="0">
+        <remap from="~costmap" to="/costmap_node/costmap/costmap"/>
+        <remap from="~bounding_boxes" to="/bboxes"/>
+        <remap from="~mission_status" to="/mission_status"/>
+    </node>
+
+    <include file="$(find costmap_2d)/launch/tufast_costmap.launch"/>
+    <include file="$(find tufast_gazebo)/launch/sem_challenge4.launch"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find costmap_2d)/launch/tufast_costmap.rviz"/>
+
+</launch>
