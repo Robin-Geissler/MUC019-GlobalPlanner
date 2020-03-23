@@ -28,11 +28,8 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
     // -----------------------------------------
     // subscribers
     // ----------------------------------------
-    // ~ muss hier eventuell weg
     _subBoundingBoxes = nh.subscribe("bounding_boxes", 1000, &GlobalPlannerNode::boundingBoxCallback, this);
-
-    _subOccupancyGridMap = nh.subscribe("map", 1000, &GlobalPlannerNode::occuGridMapCallback, this);
-
+    _subOccupancyGridMap = nh.subscribe("costmap", 1000, &GlobalPlannerNode::occuGridMapCallback, this);
     _subMissionStatus = nh.subscribe("mission_status", 1000, &GlobalPlannerNode::missionStatusCallback, this);
     
     // -----------------------------------------
@@ -41,7 +38,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
 
     geometry_msgs::TransformStamped t;
     try {
-        t = _tfBuffer.lookupTransform("/map", "/base", ros::Time(0));
+        t = _tfBuffer.lookupTransform("map", "base", ros::Time(0));
         _currentPosition.position.x = t.transform.translation.x;
         _currentPosition.position.y = t.transform.translation.y;
         _currentPosition.position.z = t.transform.translation.z;
