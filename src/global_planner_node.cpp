@@ -53,7 +53,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
     // publishers
     // ----------------------------------------
 
-    _pubGoalPoses = nh.advertise<geometry_msgs::Pose>("goal_poses", 1);
+    _pubGoalPoses = nh.advertise<tufast_msgs::GoalPoints>("goal_points", 1);
     _pubPath = nh.advertise<nav_msgs::Path>("path", 1);
 
 }
