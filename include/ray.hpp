@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 class Vec2{
 private:
@@ -23,8 +24,13 @@ public:
 };
 
 class Ray{
+private:
+    Vec2 start; // start point of the Ray
+    Vec2 dir;   // direction of the Ray
+    float length; // length of the Ray (until intersection)
 
-
+public:
+    Ray(const Vec2 &start, const Vec2 &dir);
 
 };
 

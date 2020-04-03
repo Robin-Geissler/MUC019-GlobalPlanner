@@ -1,5 +1,9 @@
 #include "ray.hpp"
 
+/********************************************************
+ *  Class Vec2
+ ********************************************************/
+
 Vec2::Vec2(float x, float y) : x(x), y(y) {}
 
 Vec2::~Vec2() = default;
@@ -26,4 +30,12 @@ Vec2 Vec2::operator+(const Vec2& vec) {
 
 Vec2 Vec2::operator-(const Vec2& vec) {
     return Vec2(x-vec.x, y-vec.y);
+}
+
+/********************************************************
+ *  Class Ray
+ ********************************************************/
+
+Ray::Ray(const Vec2 &start, const Vec2 &dir) : start(start), dir(dir) {
+    this->length = INFINITY;
 }
