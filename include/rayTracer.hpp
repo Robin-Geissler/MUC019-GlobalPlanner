@@ -47,7 +47,7 @@ private:
 public:
     const std::vector<Ray> &getRays() const;
     void addRay(const Ray &ray);
-    void deleteRay(int index);
+    void removeRay(int index);
     Ray getLongestRay();
 
 };

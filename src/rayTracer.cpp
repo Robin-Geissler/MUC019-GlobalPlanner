@@ -1,5 +1,7 @@
 #include "rayTracer.hpp"
 
+#include <ros/ros.h>    // this is just to display warnings, can be removed in the end
+
 /********************************************************
  *  Class Vec2
  ********************************************************/
@@ -59,11 +61,13 @@ void Ray::setDir(const Vec2 &dir) {
 
 float Ray::getLength(int8_t occupancyGrid) {
     // TODO
+    ROS_WARN("getLength in Class Ray is not yet implemented");
     return 0;
 }
 
 Vec2 Ray::getCenter() {
     // TODO
+    ROS_WARN("getCenter in Class Ray is not yet implemented");
     return Vec2(0, 0);
 }
 
@@ -77,14 +81,17 @@ const std::vector<Ray> &RayTracer::getRays() const {
 
 void RayTracer::addRay(const Ray &ray) {
     // TODO
+    ROS_WARN("addRay in Class RayTracer is not yet implemented");
 }
 
-void RayTracer::deleteRay(int index) {
+void RayTracer::removeRay(int index) {
     // TODO
+    ROS_WARN("removeRay in Class RayTracer is not yet implemented");
 }
 
 Ray RayTracer::getLongestRay() {
     // TODO
+    ROS_WARN("getLongestRay in Class RayTracer is not yet implemented");
     return Ray(Vec2(0,0), Vec2(0,0));
 }
 
