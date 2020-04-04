@@ -74,6 +74,35 @@ Vec2 Ray::getCenter() {
 /********************************************************
  *  Class RayTracer
  ********************************************************/
+/*
+ * Breef:
+ * This is the Constructor for the RayTracer.
+ * It Constructs numberOfRays Rays.
+ * All Rays will start at RAYTRACER_RAY_START_X and RAYTRACER_RAY_START_Y.
+ * Direction of the generated Rays:
+ * The direction of the Rays will be equally distributed between 0 and 180 degrees.
+ * 0 degrees and 180 degrees are not included.
+ * The vectors representing the direction will hold unit circle values
+ */
+RayTracer::RayTracer(int numberOfRays){
+    // numberOfRays is to low
+    if(numberOfRays < 1){
+        throw std::range_error("numberOfRays in RayTracer::Raytracer() is out of Range");
+    }
+
+    std::vector<Ray> rayVec;
+    for(int i = 1; i <= numberOfRays; i++){
+        /*
+         * all rays should be equally distanced, so coordinates in the unit circle will be calculated
+         */
+        float angle = ((float)i/(float)(numberOfRays + 1) * 180);
+        Vec2 dir(cos(angle),sin(angle));
+        Ray ray(Vec2(RAYTRACER_RAY_START_X, RAYTRACER_RAY_START_Y),dir);
+        rayVec.push_back(ray);
+    }
+    this->rays = rayVec;
+
+}
 
 const std::vector<Ray> &RayTracer::getRays() const {
     return rays;
@@ -94,6 +123,8 @@ Ray RayTracer::getLongestRay() {
     ROS_WARN("getLongestRay in Class RayTracer is not yet implemented");
     return Ray(Vec2(0,0), Vec2(0,0));
 }
+
+
 
 
 

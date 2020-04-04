@@ -5,6 +5,10 @@
 #include <iostream>
 #include <cmath>
 
+#define RAYTRACER_RAY_START_X 50
+#define RAYTRACER_RAY_START_Y 0
+#define RAYTRACER_RAYNUMBER 25  // should always be odd
+
 class Vec2{
 private:
     float x;
@@ -45,6 +49,7 @@ private:
     std::vector<Ray> rays;
 
 public:
+    explicit RayTracer(int numberOfVectors);
     const std::vector<Ray> &getRays() const;
     void addRay(const Ray &ray);
     void removeRay(int index);
