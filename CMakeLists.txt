@@ -28,8 +28,8 @@ include_directories(
 add_executable(global_planner
     src/global_planner_node.cpp
     include/global_planner_node.hpp
-    src/ray.cpp
-    include/ray.hpp)
+    src/rayTracer.cpp
+    include/rayTracer.hpp)
 
 add_dependencies(global_planner
   ${catkin_EXPORTED_TARGETS}

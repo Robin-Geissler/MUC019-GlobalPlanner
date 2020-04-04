@@ -15,6 +15,8 @@
 
 #include <tf2_ros/transform_listener.h>
 
+#include "rayTracer.hpp"
+
 namespace tufast_planner {
 
 typedef enum e_MissionType {
