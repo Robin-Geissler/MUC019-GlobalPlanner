@@ -96,7 +96,7 @@ RayTracer::RayTracer(int numberOfRays){
         /*
          * all rays should be equally distanced, so coordinates in the unit circle will be calculated
          */
-        float angle = ((float)i/(float)(numberOfRays + 1) * 180);
+        float angle = ((float)i/(float)(numberOfRays + 1) * M_PIf32);
         Vec2 dir(cos(angle),sin(angle));
         Ray ray(Vec2(RAYTRACER_RAY_START_X, RAYTRACER_RAY_START_Y),dir);
         rayVec.push_back(ray);

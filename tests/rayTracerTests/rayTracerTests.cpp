@@ -20,8 +20,9 @@ TEST(RayTracer_InitTest, correctInitVectorNumber_4){
 TEST(RayTracer_InitTest, correctInitVectors_1){
     RayTracer rayTracer = RayTracer(1);
 
-    EXPECT_FLOAT_EQ(rayTracer.getRays().front().getDir().getX(), 0.0);
-    EXPECT_FLOAT_EQ(rayTracer.getRays().front().getDir().getY(),1.0);
+    EXPECT_NEAR(rayTracer.getRays().front().getDir().getX(), 0.0, 0.001);
+    EXPECT_NEAR(rayTracer.getRays().front().getDir().getY(),1.0, 0.001);
+
 }
 
 
