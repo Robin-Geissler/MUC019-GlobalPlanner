@@ -25,17 +25,33 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+
+# global planner Node
 add_executable(global_planner
-    src/global_planner_node.cpp
     include/global_planner_node.hpp
-    src/rayTracer.cpp
-    include/rayTracer.hpp)
+    src/global_planner_node.cpp
+    include/rayTracer.hpp
+    src/rayTracer.cpp)
 
 add_dependencies(global_planner
-  ${catkin_EXPORTED_TARGETS}
-)
+        ${catkin_EXPORTED_TARGETS}
+        )
 
 target_link_libraries(global_planner
-  ${catkin_LIBRARIES}
-)
+        ${catkin_LIBRARIES}
+        )
+
+# Tests for the global Planner
+add_subdirectory(tests)
+
+# rayTracer Tests
+add_executable(rayTracerTests
+        tests/rayTracerTests/rayTracerTests.cpp
+        include/rayTracer.hpp
+        src/rayTracer.cpp
+        )
+
+target_link_libraries(rayTracerTests gtest gmock  pthread)
+
+
 
