@@ -25,6 +25,30 @@ TEST(RayTracer_InitTest, correctInitVectors_1){
 
 }
 
+TEST(RayTracer_InitTest, correctInitVectors_2){
+    RayTracer rayTracer = RayTracer(2);
+
+    EXPECT_NEAR(rayTracer.getRays()[0].getDir().getX(), 0.5, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[0].getDir().getY(),0.866025, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[1].getDir().getX(), -0.5, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[1].getDir().getY(),0.866025, 0.001);
+}
+
+TEST(RayTracer_InitTest, correctInitVectors_5){
+    RayTracer rayTracer = RayTracer(5);
+
+    EXPECT_NEAR(rayTracer.getRays()[0].getDir().getX(), 0.866025, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[0].getDir().getY(),0.5, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[1].getDir().getX(), 0.5, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[1].getDir().getY(),0.866025, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[2].getDir().getX(), 0.0, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[2].getDir().getY(),1.0, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[3].getDir().getX(), -0.5, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[3].getDir().getY(),0.866025, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[4].getDir().getX(), -0.866025, 0.001);
+    EXPECT_NEAR(rayTracer.getRays()[4].getDir().getY(),0.5, 0.001);
+}
+
 
 
 int main(int argc, char **argv){
