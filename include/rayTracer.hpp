@@ -23,6 +23,7 @@ public:
     void setY(float y);
     Vec2 operator +(const Vec2& vec);
     Vec2 operator -(const Vec2& vec);
+    Vec2 operator *(const float& factor);
 
 
 };
@@ -31,6 +32,8 @@ class Ray{
 private:
     Vec2 start; // start point of the Ray
     Vec2 dir;   // direction of the Ray
+
+
 
 public:
     Ray(const Vec2 &start, const Vec2 &dir);

@@ -34,6 +34,10 @@ Vec2 Vec2::operator-(const Vec2& vec) {
     return Vec2(x-vec.x, y-vec.y);
 }
 
+Vec2 Vec2::operator*(const float& factor) {
+    return Vec2(x*factor, y*factor);
+}
+
 /********************************************************
  *  Class Ray
  ********************************************************/
@@ -124,6 +128,8 @@ Ray RayTracer::getLongestRay() {
     std::cerr << "getLongestRay in Class RayTracer is not yet implemented" << std::endl;
     return Ray(Vec2(0,0), Vec2(0,0));
 }
+
+
 
 
 
