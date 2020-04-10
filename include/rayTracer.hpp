@@ -54,7 +54,7 @@ public:
 class RayTracer{
 private:
     std::vector<Ray> rays;  // holds the Rays of the RayTracer
-    nav_msgs::OccupancyGrid inputGrid;  // input Occupancy Grid to calculate Ray collisions
+    nav_msgs::OccupancyGrid inputGrid;  // input Occupancy Grid from Lidar to calculate Ray collisions
     nav_msgs::OccupancyGrid outputGrid; // output Occupancy Grid where the Goal Point is set to 5
 
 
