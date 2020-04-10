@@ -49,7 +49,37 @@ TEST(RayTracer_InitTest, correctInitVectors_5){
     EXPECT_NEAR(rayTracer.getRays()[4].getDir().getY(),1.0, 0.001);
 }
 
+TEST(Ray_SetOccuGridFields, getNextGridPoint){
+    Ray ray(Coordinate(1,2),Vec2(1,2));
+    float mainDirNextS = 2.5;
+    float subDirNexS = 1.0;
+    int mainCoordinate = 4;
+    int subCoordinate = 2;
+    Coordinate testCo1 = ray.getNextGridPoint(&mainDirNextS, &subDirNexS, &mainCoordinate, &subCoordinate);
+    EXPECT_EQ(mainDirNextS,1.5);
+    EXPECT_EQ(subDirNexS,1.0);
+    EXPECT_EQ(mainCoordinate,5);
+    EXPECT_EQ(subCoordinate,2);
 
+    Coordinate testCo2 = ray.getNextGridPoint(&mainDirNextS, &subDirNexS, &mainCoordinate, &subCoordinate);
+    EXPECT_EQ(mainDirNextS,0.5);
+    EXPECT_EQ(subDirNexS,1.0);
+    EXPECT_EQ(mainCoordinate,6);
+    EXPECT_EQ(subCoordinate,2);
+
+    Coordinate testCo3 = ray.getNextGridPoint(&mainDirNextS, &subDirNexS, &mainCoordinate, &subCoordinate);
+    EXPECT_EQ(mainDirNextS,0.5);
+    EXPECT_EQ(subDirNexS,0.0);
+    EXPECT_EQ(mainCoordinate,6);
+    EXPECT_EQ(subCoordinate,3);
+
+    EXPECT_EQ(testCo1.getX(),5);
+    EXPECT_EQ(testCo1.getY(),2);
+    EXPECT_EQ(testCo2.getX(),6);
+    EXPECT_EQ(testCo2.getY(),2);
+    EXPECT_EQ(testCo3.getX(),6);
+    EXPECT_EQ(testCo3.getY(),3);
+}
 
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);

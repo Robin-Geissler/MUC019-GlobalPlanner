@@ -3,6 +3,28 @@
 #include <ros/ros.h>    // this is just to display warnings, can be removed in the end
 
 /********************************************************
+ *  Class Coordinate
+ ********************************************************/
+
+Coordinate::Coordinate(int x, int y) : x(x), y(y) {}
+
+int Coordinate::getX() const {
+    return x;
+}
+
+void Coordinate::setX(int x) {
+    Coordinate::x = x;
+}
+
+int Coordinate::getY() const {
+    return y;
+}
+
+void Coordinate::setY(int y) {
+    Coordinate::y = y;
+}
+
+/********************************************************
  *  Class Vec2
  ********************************************************/
 
@@ -38,20 +60,51 @@ Vec2 Vec2::operator*(const float& factor) {
     return Vec2(x*factor, y*factor);
 }
 
+
 /********************************************************
  *  Class Ray
  ********************************************************/
 
-Ray::Ray(const Vec2 &start, const Vec2 &dir) : start(start), dir(dir) {
+int Ray::getCoodinateIndex(Coordinate field, nav_msgs::OccupancyGrid grid) {
+    // TODO
+    std::cerr << "getCoorddinateIndex in Class Ray is not yet implemented" << std::endl;
+    return 0;
+}
+
+bool Ray::outOfBounds(Coordinate field, nav_msgs::OccupancyGrid) {
+    // TODO
+    std::cerr << "outOfBounds in Class Ray is not yet implemented" << std::endl;
+    return false;
+}
+
+bool Ray::occupied(Coordinate field, nav_msgs::OccupancyGrid grid) {
+    // TODO
+    std::cerr << "occupied in Class Ray is not yet implemented" << std::endl;
+    return false;
+}
+
+
+
+int Ray::decAbs(float *num) {
+    if(*num > 0){
+        (*num)--;
+        return 1;
+    } else{
+        (*num)++;
+        return -1;
+    }
+}
+
+Ray::Ray(const Coordinate &start, const Vec2 &dir) : start(start), dir(dir) {
    }
 
 Ray::~Ray() = default;
 
-const Vec2 &Ray::getStart() const {
+const Coordinate &Ray::getStart() const {
     return start;
 }
 
-void Ray::setStart(const Vec2 &start) {
+void Ray::setStart(const Coordinate &start) {
     Ray::start = start;
 }
 
@@ -76,9 +129,64 @@ Vec2 Ray::getCenter() {
 }
 
 void Ray::setOccuGridFields(nav_msgs::OccupancyGrid &inputGrid) {
-    // TODO
-    std::cerr << "setOccuGridFields in Class Ray is not yet implemented" << std::endl;
+    int curX = Ray::getStart().getX();  // current x coordinate
+    int curY = Ray::getStart().getY();  // current y coordinate
+    Coordinate newPoint(curX,curY);     // new Ray Point
+
+    bool xIsMainDir = abs(Ray::getDir().getX()) >= abs(Ray::getDir().getY()); // tells if x is bigger than y
+    float NextStepsX;   // tells how many steps to go in x direction before reload
+    float NextStepsY;   // tells how many steps to go in y direction before reload
+
+    // init NextSteps
+    // only half way for the main direction in first init
+    // this will be full way after a refill
+    if(xIsMainDir){
+        NextStepsX = Ray::getDir().getX() / 2;
+        NextStepsY = Ray::getDir().getY();
+    }else{
+        NextStepsX = Ray::getDir().getX();
+        NextStepsY = Ray::getDir().getY() / 2;
+    }
+
+    // end the Loop if the Ray Collides with something
+    while(!outOfBounds(newPoint,inputGrid) && !occupied(newPoint,inputGrid)){
+        // add new Ray Point
+        Ray::occuGridFields.push_back(newPoint);
+
+        // find next Ray Point
+        if(xIsMainDir){
+            // go to next point, adjust NextSteps and cur accordingly
+            newPoint = getNextGridPoint(&NextStepsX, &NextStepsY, &curX, &curY);
+        } else{
+            newPoint = getNextGridPoint(&NextStepsY, &NextStepsX, &curY, &curX);
+        }
+
+        // if nextSteps in x and y direction is empty, refill it here
+        if(abs(NextStepsX) < 1 && abs(NextStepsY) < 1){
+            NextStepsX +=Ray::getDir().getX();
+            NextStepsY +=Ray::getDir().getY();
+        }
+    }
 }
+
+Coordinate Ray::getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate) {
+    // go in main dir until it's empty
+    if(abs(*mainDirNextSteps) >= 1){
+        // go 1 step in x dir and dec mainDirNextSteps by 1
+        *mainDirCoordinate += decAbs(mainDirNextSteps);
+    }
+    // go in sub dir
+    else{
+        // go 1 step in sub dir and dec subDirNextSteps by 1
+        *subDirCoordinate += decAbs(subDirNextSteps);
+    }
+    return {*mainDirCoordinate, *subDirCoordinate};
+}
+
+
+
+
+
 
 /********************************************************
  *  Class RayTracer
@@ -119,10 +227,11 @@ RayTracer::RayTracer(int numberOfRays){
                 dir = dir * (1 / abs(dir.getY()));
             }
         }
-        Ray ray(Vec2(RAYTRACER_RAY_START_X, RAYTRACER_RAY_START_Y),dir);
+        Ray ray(Coordinate(RAYTRACER_RAY_START_X, RAYTRACER_RAY_START_Y),dir);
         rayVec.push_back(ray);
     }
-    this->rays = rayVec;
+    RayTracer::rays = rayVec;
+
 
     // init inputGrid
 
@@ -137,7 +246,7 @@ const std::vector<Ray> &RayTracer::getRays() const {
 Ray RayTracer::getLongestRay() {
     // TODO
     std::cerr << "getLongestRay in Class RayTracer is not yet implemented" << std::endl;
-    return Ray(Vec2(0,0), Vec2(0,0));
+    return Ray(Coordinate(0,0), Vec2(0,0));
 }
 
 const nav_msgs::OccupancyGrid &RayTracer::getInputGrid() const {
@@ -155,11 +264,6 @@ const nav_msgs::OccupancyGrid &RayTracer::getOutputGrid() const {
 void RayTracer::setOutputGrid(const nav_msgs::OccupancyGrid &outputGrid) {
     RayTracer::outputGrid = outputGrid;
 }
-
-
-
-
-
 
 
 
