@@ -84,7 +84,7 @@ public:
     Coordinate getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate);
 
     float getLength();
-    Vec2 getCenter();
+    Coordinate getCenter();
 };
 
 class RayTracer{

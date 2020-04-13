@@ -145,10 +145,8 @@ float Ray::getLength() {
     return sqrtf(horizontalLength*horizontalLength + verticalLength*verticalLength);
 }
 
-Vec2 Ray::getCenter() {
-    // TODO
-    std::cerr << "getCenter in Class Ray is not yet implemented" << std::endl;
-    return Vec2(0, 0);
+Coordinate Ray::getCenter() {
+    return (occuGridFields.back() - start) / 2;
 }
 
 void Ray::setOccuGridFields(nav_msgs::OccupancyGrid &inputGrid) {
