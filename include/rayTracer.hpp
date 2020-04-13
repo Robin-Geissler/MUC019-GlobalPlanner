@@ -53,7 +53,7 @@ private:
     /*
      * Helper functions
      */
-    int getCoodinateIndex(Coordinate field, nav_msgs::OccupancyGrid grid);
+    static int getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid grid);
     bool outOfBounds(Coordinate field, nav_msgs::OccupancyGrid grid);
     bool occupied(Coordinate field, nav_msgs::OccupancyGrid grid);
 
