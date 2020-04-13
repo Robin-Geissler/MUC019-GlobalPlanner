@@ -24,6 +24,23 @@ void Coordinate::setY(int y) {
     Coordinate::y = y;
 }
 
+Coordinate Coordinate::operator+(const Coordinate &coo) {
+    return Coordinate(x + coo.x, y + coo.y);
+}
+
+Coordinate Coordinate::operator-(const Coordinate &coo) {
+    return Coordinate(x - coo.x, y - coo.y);
+}
+
+Coordinate Coordinate::operator*(const float &factor) {
+    return Coordinate(x * factor, y * factor);
+}
+
+Coordinate Coordinate::operator/(const float &divisor) {
+    return Coordinate(x / divisor, y / divisor);
+}
+
+
 /********************************************************
  *  Class Vec2
  ********************************************************/

@@ -21,6 +21,11 @@ public:
     void setX(int x);
     int getY() const;
     void setY(int y);
+    Coordinate operator +(const Coordinate& coo);
+    Coordinate operator -(const Coordinate& coo);
+    Coordinate operator *(const float& factor);
+    Coordinate operator /(const float& divisor);
+
 };
 
 class Vec2{
