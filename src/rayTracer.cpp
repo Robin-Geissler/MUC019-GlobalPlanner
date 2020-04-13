@@ -82,7 +82,7 @@ Vec2 Vec2::operator*(const float& factor) {
  *  Class Ray
  ********************************************************/
 
-int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid grid) {
+int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
     // calculate index
     int index = (field.getY() * grid.info.width) + field.getX();
 
@@ -94,12 +94,12 @@ int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid grid)
     return index;
 }
 
-bool Ray::outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid grid) {
+bool Ray::outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
     // check bounds
     return field.getX() >= grid.info.width || field.getY() >= grid.info.height;
 }
 
-bool Ray::occupied(Coordinate field, nav_msgs::OccupancyGrid grid) {
+bool Ray::occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
     // TODO
     std::cerr << "occupied in Class Ray is not yet implemented" << std::endl;
     return false;
