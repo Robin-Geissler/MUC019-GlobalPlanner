@@ -139,9 +139,10 @@ void Ray::setDir(const Vec2 &dir) {
 }
 
 float Ray::getLength() {
-    // TODO
-    std::cerr << "getLength in Class Ray is not yet implemented" << std::endl;
-    return 0;
+    float horizontalLength = occuGridFields.back().getX() - start.getX();
+    float verticalLength = occuGridFields.back().getY() - start.getY();
+
+    return sqrtf(horizontalLength*horizontalLength + verticalLength*verticalLength);
 }
 
 Vec2 Ray::getCenter() {
