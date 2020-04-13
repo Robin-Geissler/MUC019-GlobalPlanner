@@ -66,9 +66,15 @@ Vec2 Vec2::operator*(const float& factor) {
  ********************************************************/
 
 int Ray::getCoodinateIndex(Coordinate field, nav_msgs::OccupancyGrid grid) {
-    // TODO
-    std::cerr << "getCoorddinateIndex in Class Ray is not yet implemented" << std::endl;
-    return 0;
+    // calculate index
+    int index = (field.getY() * grid.info.width) + field.getX();
+
+    // asked field is out of Bounds
+    if(index > grid.data.size()){
+        throw std::range_error("field in Ray::getCoordinateIndex() is out of Bounds");
+    }
+
+    return index;
 }
 
 bool Ray::outOfBounds(Coordinate field, nav_msgs::OccupancyGrid) {
