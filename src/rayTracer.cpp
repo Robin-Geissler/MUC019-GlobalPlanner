@@ -1,6 +1,5 @@
 #include "rayTracer.hpp"
 
-#include <ros/ros.h>    // this is just to display warnings, can be removed in the end
 
 /********************************************************
  *  Class Coordinate
