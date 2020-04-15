@@ -82,7 +82,7 @@ public:
      */
     Coordinate getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate);
 
-    float getLength();
+    float getLength(const nav_msgs::OccupancyGrid& inputGrid);
     Coordinate getCenter();
 };
 

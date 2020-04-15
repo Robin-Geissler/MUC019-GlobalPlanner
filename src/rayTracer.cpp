@@ -143,7 +143,12 @@ void Ray::setDir(const Vec2 &dir) {
     Ray::dir = dir;
 }
 
-float Ray::getLength() {
+float Ray::getLength(const nav_msgs::OccupancyGrid& inputGrid) {
+    // case of infinite long ray
+    if(edge(occuGridFields.back(), inputGrid)){
+        return INFINITY;
+    }
+
     float horizontalLength = occuGridFields.back().getX() - start.getX();
     float verticalLength = occuGridFields.back().getY() - start.getY();
 
