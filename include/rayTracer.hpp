@@ -114,14 +114,14 @@ public:
 
     // just public for testing for the moment
     /**
-     * @brief go´s into mainDir if possible, subDir else. Adjusts all Input accordingly
+     * @brief go´s into mainDir if possible, subDir else. Adjusts all Input accordingly.
+     * The next grid coordinate will be saved in mainDir Coordinate and subDirCoordinate
      * @param mainDirNextSteps the number of steps that need to be taken in the mainDir
      * @param subDirNextSteps the number of steps that need to be taken in the subDir
      * @param mainDirCoordinate the current Coordinate of mainDir
      * @param subDirCoordinate the current Coordinate of subDir
-     * @return nextCoordinate
      */
-    Coordinate getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate);
+    void getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate);
 
     float getLength(const nav_msgs::OccupancyGrid& inputGrid);
     Coordinate getCenter();
@@ -155,7 +155,7 @@ public:
     const nav_msgs::OccupancyGrid &getInputGrid() const;
 
     /**
-     * @brief updates the Input Grid, and sets occuGridFields for all Rays accordingly
+     * @brief updates the inputGrid, and sets occuGridFields for all Rays accordingly
      * @param inputGrid the new inputGrid
      */
     void setInputGrid(const nav_msgs::OccupancyGrid &inputGrid);

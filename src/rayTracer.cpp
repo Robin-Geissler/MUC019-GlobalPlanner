@@ -167,14 +167,20 @@ void Ray::setOccuGridFields(const nav_msgs::OccupancyGrid &inputGrid) {
     float NextStepsY;   // tells how many steps to go in y direction before reload
 
     // init NextSteps
-    // only half way for the main direction in first init
+    // only half way for the main direction in first init if half way >= 1
     // this will be full way after a refill
     if(xIsMainDir){
-        NextStepsX = Ray::getDir().getX() / 2;
+        NextStepsX = Ray::getDir().getX();
         NextStepsY = Ray::getDir().getY();
+        if(NextStepsX >= 2){
+            NextStepsX /= 2;
+        }
     }else{
         NextStepsX = Ray::getDir().getX();
-        NextStepsY = Ray::getDir().getY() / 2;
+        NextStepsY = Ray::getDir().getY();
+        if(NextStepsY >= 2){
+            NextStepsY /= 2;
+        }
     }
 
     // end the Loop if the Ray Collides with something
@@ -185,9 +191,11 @@ void Ray::setOccuGridFields(const nav_msgs::OccupancyGrid &inputGrid) {
         // find next Ray Point
         if(xIsMainDir){
             // go to next point, adjust NextSteps and cur accordingly
-            newPoint = getNextGridPoint(&NextStepsX, &NextStepsY, &curX, &curY);
+            getNextGridPoint(&NextStepsX, &NextStepsY, &curX, &curY);
+            newPoint =  {curX, curY};
         } else{
-            newPoint = getNextGridPoint(&NextStepsY, &NextStepsX, &curY, &curX);
+            getNextGridPoint(&NextStepsY, &NextStepsX, &curY, &curX);
+            newPoint = {curX,curY};
         }
 
         // if nextSteps in x and y direction is empty, refill it here
@@ -198,7 +206,7 @@ void Ray::setOccuGridFields(const nav_msgs::OccupancyGrid &inputGrid) {
     }
 }
 
-Coordinate Ray::getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate) {
+void Ray::getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate) {
     // go in main dir until it's empty
     if(abs(*mainDirNextSteps) >= 1){
         // go 1 step in x dir and dec mainDirNextSteps by 1
@@ -209,7 +217,6 @@ Coordinate Ray::getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps
         // go 1 step in sub dir and dec subDirNextSteps by 1
         *subDirCoordinate += decAbs(subDirNextSteps);
     }
-    return {*mainDirCoordinate, *subDirCoordinate};
 }
 
 
