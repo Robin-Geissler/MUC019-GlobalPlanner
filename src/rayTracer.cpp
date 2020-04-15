@@ -157,7 +157,7 @@ Coordinate Ray::getCenter() {
     return (occuGridFields.back() - start) / 2;
 }
 
-void Ray::setOccuGridFields(nav_msgs::OccupancyGrid &inputGrid) {
+void Ray::setOccuGridFields(const nav_msgs::OccupancyGrid &inputGrid) {
     int curX = Ray::getStart().getX();  // current x coordinate
     int curY = Ray::getStart().getY();  // current y coordinate
     Coordinate newPoint(curX,curY);     // new Ray Point
@@ -281,7 +281,13 @@ const nav_msgs::OccupancyGrid &RayTracer::getInputGrid() const {
 }
 
 void RayTracer::setInputGrid(const nav_msgs::OccupancyGrid &inputGrid) {
+    // update inputGrid
     RayTracer::inputGrid = inputGrid;
+
+    // update all Rays
+    for(auto & ray : rays){
+        ray.setOccuGridFields(inputGrid);
+    }
 }
 
 const nav_msgs::OccupancyGrid &RayTracer::getOutputGrid() const {
