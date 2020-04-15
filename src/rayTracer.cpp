@@ -94,8 +94,8 @@ int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid
 }
 
 bool Ray::outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
-    // check bounds
-    return field.getX() >= grid.info.width || field.getY() >= grid.info.height;
+    // check bounds (right, top, left, bottom)
+    return field.getX() >= grid.info.width || field.getY() >= grid.info.height || field.getX() < 0 || field.getY() < 0;
 }
 
 bool Ray::edge(Coordinate field, const nav_msgs::OccupancyGrid& grid){

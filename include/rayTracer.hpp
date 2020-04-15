@@ -82,7 +82,7 @@ private:
      */
     static int getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
-    bool outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid);
+    static bool outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
     bool edge(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
