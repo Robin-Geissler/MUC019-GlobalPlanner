@@ -98,9 +98,9 @@ bool Ray::outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
     return field.getX() >= grid.info.width || field.getY() >= grid.info.height || field.getX() < 0 || field.getY() < 0;
 }
 
-bool Ray::edge(Coordinate field, const nav_msgs::OccupancyGrid& grid){
-    // check edge field
-    return field.getX() == grid.info.width - 1 || field.getY() == grid.info.height - 1;
+bool Ray::edge(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
+    // check edge field (right, top, left)
+    return field.getX() == grid.info.width - 1 || field.getY() == grid.info.height - 1 || field.getX() == 0 ;
 }
 
 bool Ray::occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid) {

@@ -84,9 +84,9 @@ private:
 
     static bool outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
-    bool edge(Coordinate field, const nav_msgs::OccupancyGrid& grid);
+    static bool edge(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
-    bool occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid);
+    static bool occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
     /**
      * @brief decreases abs of num by 1 and outputs the difference
