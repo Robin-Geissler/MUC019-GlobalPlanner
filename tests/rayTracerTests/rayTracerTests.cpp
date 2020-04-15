@@ -75,6 +75,27 @@ TEST(Ray_SetOccuGridFields, getNextGridPoint){
 
 }
 
+TEST(RayTracer_GridTest, TestGrid_1){
+    RayTracer rayTracer = RayTracer(5);
+
+    nav_msgs::OccupancyGrid grid;
+    grid.info.resolution = 1.0;
+    grid.info.width = 3;
+    grid.info.height = 3;
+
+    // load map
+    for(int i = 0; i < 9; i++){
+        grid.data.push_back(0);
+    }
+
+    rayTracer.setInputGrid(grid);
+    Ray ray = rayTracer.getBestRay();
+
+    EXPECT_NEAR(ray.getLength(grid),3.16228, 0.001);
+    EXPECT_NEAR(ray.getDir().getX(), 0.0, 0.001);
+    EXPECT_NEAR(ray.getDir().getY(),1.0, 0.001);
+}
+
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

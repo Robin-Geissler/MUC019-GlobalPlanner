@@ -7,7 +7,7 @@
 
 #include <nav_msgs/OccupancyGrid.h>
 
-#define RAYTRACER_RAY_START_X 50
+#define RAYTRACER_RAY_START_X 1
 #define RAYTRACER_RAY_START_Y 0
 #define RAYTRACER_RAYNUMBER 25  // should always be odd
 
