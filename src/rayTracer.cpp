@@ -99,6 +99,11 @@ bool Ray::outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
     return field.getX() >= grid.info.width || field.getY() >= grid.info.height;
 }
 
+bool Ray::edge(Coordinate field, const nav_msgs::OccupancyGrid& grid){
+    // check edge field
+    return field.getX() == grid.info.width - 1 || field.getY() == grid.info.height - 1;
+}
+
 bool Ray::occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
     // TODO
     std::cerr << "occupied in Class Ray is not yet implemented" << std::endl;
@@ -255,9 +260,9 @@ RayTracer::RayTracer(int numberOfRays){
 
 
     // init inputGrid
-
+    // TODO
     // init outputGrid
-
+    // TODO
 }
 
 const std::vector<Ray> &RayTracer::getRays() const {

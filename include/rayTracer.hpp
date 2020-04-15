@@ -44,8 +44,6 @@ public:
     Vec2 operator -(const Vec2& vec);
     Vec2 operator *(const float& factor);
 
-
-
 };
 
 class Ray{
@@ -60,6 +58,7 @@ private:
      */
     static int getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid);
     bool outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid);
+    bool edge(Coordinate field, const nav_msgs::OccupancyGrid& grid);
     bool occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
     /*
