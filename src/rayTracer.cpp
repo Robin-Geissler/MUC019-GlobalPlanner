@@ -104,9 +104,8 @@ bool Ray::edge(Coordinate field, const nav_msgs::OccupancyGrid& grid){
 }
 
 bool Ray::occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
-    // TODO
-    std::cerr << "occupied in Class Ray is not yet implemented" << std::endl;
-    return false;
+    // TODO set RAY_CRITICAL_COLLISION_PROBABILLITY in rayTracer.hpp
+    return grid.data[getCoodinateIndex(field,grid)] <= RAY_CRITICAL_COLLISION_PROBABILITY;
 }
 
 

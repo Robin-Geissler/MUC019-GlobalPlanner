@@ -10,7 +10,9 @@
 #define RAYTRACER_RAY_START_X 50
 #define RAYTRACER_RAY_START_Y 0
 #define RAYTRACER_RAYNUMBER 25  // should always be odd
+
 #define RAY_BOOST_SCALOR 1  // scales the importance of driving straight by removing weight from outer rays in RayTracer::getBestRay
+#define RAY_CRITICAL_COLLISION_PROBABILITY 0    // Fields with this probability in the occupancy grid will serve as ray blockers
 
 class Coordinate{
 private:
