@@ -10,6 +10,7 @@
 #define RAYTRACER_RAY_START_X 50
 #define RAYTRACER_RAY_START_Y 0
 #define RAYTRACER_RAYNUMBER 25  // should always be odd
+#define RAY_BOOST_SCALOR 1  // scales the importance of driving straight by removing weight from outer rays in RayTracer::getBestRay
 
 class Coordinate{
 private:
@@ -97,7 +98,7 @@ private:
 public:
     explicit RayTracer(int numberOfVectors);
     const std::vector<Ray> &getRays() const;
-    Ray getLongestRay();
+    Ray getBestRay();
     const nav_msgs::OccupancyGrid &getInputGrid() const;
     void setInputGrid(const nav_msgs::OccupancyGrid &inputGrid);
     const nav_msgs::OccupancyGrid &getOutputGrid() const;

@@ -274,10 +274,17 @@ const std::vector<Ray> &RayTracer::getRays() const {
     return rays;
 }
 
-Ray RayTracer::getLongestRay() {
-    // TODO
-    std::cerr << "getLongestRay in Class RayTracer is not yet implemented" << std::endl;
-    return Ray(Coordinate(0,0), Vec2(0,0));
+Ray RayTracer::getBestRay() {
+    float rayBoost = -((float)(rays.size() - 1) / 2.0);
+    Ray longest = rays.front();
+    for(int i = 1; i < rays.size(); i++){
+        // subtracting rayBoost² here gives the middle Ray a favor
+        if(rays[i].getLength(inputGrid) - ((rayBoost*rayBoost) * RAY_BOOST_SCALOR) > longest.getLength(inputGrid)){
+            longest = rays[i];
+        }
+        rayBoost++;
+    }
+    return longest;
 }
 
 const nav_msgs::OccupancyGrid &RayTracer::getInputGrid() const {
