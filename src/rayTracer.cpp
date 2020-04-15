@@ -142,9 +142,9 @@ void Ray::setDir(const Vec2 &dir) {
 }
 
 float Ray::getLength(const nav_msgs::OccupancyGrid& inputGrid) {
-    // case of infinite long ray
+    // case: as long as possible - set to max_length = distance from Start to most outer corner of Grid
     if(edge(occuGridFields.back(), inputGrid)){
-        return INFINITY;
+        return std::sqrt((inputGrid.info.width / 2) * (inputGrid.info.width / 2) + (inputGrid.info.height * inputGrid.info.height));
     }
 
     float horizontalLength = occuGridFields.back().getX() - start.getX();
