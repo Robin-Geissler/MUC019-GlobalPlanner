@@ -271,16 +271,28 @@ const std::vector<Ray> &RayTracer::getRays() const {
 }
 
 Ray RayTracer::getBestRay() {
-    float rayBoost = -((float)(rays.size() - 1) / 2.0);
-    Ray longest = rays.front();
+    float rayBoost = 0;
+    Ray bestRay = rays.front();
+    float longestLength = bestRay.getLength(inputGrid);
+    float currentLength;
+
+
     for(int i = 1; i < rays.size(); i++){
-        // subtracting rayBoost² here gives the middle Ray a favor
-        if(rays[i].getLength(inputGrid) - ((rayBoost*rayBoost) * RAY_BOOST_SCALOR) > longest.getLength(inputGrid)){
-            longest = rays[i];
+        // adjust Rayboost to strengthen inner Rays more than outer Rays
+        if(i <= rays.size() / 2){
+            rayBoost += RAY_BOOST_SCALOR;
+        } else{
+            rayBoost -= RAY_BOOST_SCALOR;
         }
-        rayBoost++;
+
+        // if currentLength with boost is longer than longestLength with boost: select current Ray
+        currentLength = rays[i].getLength(inputGrid) + rayBoost;
+        if(currentLength > longestLength){
+            bestRay = rays[i];
+            longestLength = currentLength;
+        }
     }
-    return longest;
+    return bestRay;
 }
 
 const nav_msgs::OccupancyGrid &RayTracer::getInputGrid() const {
