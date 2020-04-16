@@ -105,7 +105,7 @@ bool Ray::edge(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
 
 bool Ray::occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
     // TODO set RAY_CRITICAL_COLLISION_PROBABILLITY in rayTracer.hpp
-    return grid.data.at(getCoodinateIndex(field,grid)) < RAY_CRITICAL_COLLISION_PROBABILITY;
+    return grid.data.at(getCoodinateIndex(field,grid)) > RAY_CRITICAL_COLLISION_PROBABILITY;
 }
 
 
