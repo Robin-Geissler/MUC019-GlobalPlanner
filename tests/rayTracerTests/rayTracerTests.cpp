@@ -96,6 +96,31 @@ TEST(RayTracer_GridTest, TestGrid_1){
     EXPECT_NEAR(ray.getDir().getY(),1.0, 0.001);
 }
 
+TEST(RayTracer_GridTest, TestGrid_2){
+    RayTracer rayTracer = RayTracer(5,2,0);
+
+    nav_msgs::OccupancyGrid grid;
+    grid.info.resolution = 1.0;
+    grid.info.width = 5;
+    grid.info.height = 5;
+
+    // load map
+    for(int i = 0; i < 25; i++){
+        if(i >=17 && i <= 19){
+            grid.data.push_back(100);
+        } else{
+            grid.data.push_back(0);
+        }
+    }
+
+    rayTracer.setInputGrid(grid);
+    Ray ray = rayTracer.getBestRay();
+
+    EXPECT_NEAR(ray.getLength(grid),4.472135, 0.001);
+    EXPECT_NEAR(ray.getDir().getX(), -1.0, 0.001);
+    EXPECT_NEAR(ray.getDir().getY(),1.73285, 0.001);
+}
+
 int main(int argc, char **argv){
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
