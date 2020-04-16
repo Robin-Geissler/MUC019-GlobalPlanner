@@ -80,7 +80,7 @@ private:
     /*
      * Helper functions
      */
-    static int getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid);
+
 
     static bool outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
@@ -124,7 +124,10 @@ public:
     void getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate);
 
     float getLength(const nav_msgs::OccupancyGrid& inputGrid);
+
     Coordinate getCenter();
+
+    static int getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 };
 
 class RayTracer{
@@ -132,6 +135,7 @@ private:
     std::vector<Ray> rays;  ///  holds the Rays of the RayTracer
     nav_msgs::OccupancyGrid inputGrid;  /// input Occupancy Grid from Lidar to calculate Ray collisions
     nav_msgs::OccupancyGrid outputGrid; /// output Occupancy Grid where the Goal Point is set to 5
+
 
 
 

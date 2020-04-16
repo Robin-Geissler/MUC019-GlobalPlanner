@@ -81,17 +81,6 @@ Vec2 Vec2::operator*(const float& factor) {
  *  Class Ray
  ********************************************************/
 
-int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
-    // calculate index
-    int index = (field.getY() * grid.info.width) + field.getX();
-
-    // asked field is out of Bounds
-    if(index > grid.data.size()){
-        throw std::range_error("field in Ray::getCoordinateIndex() is out of Bounds");
-    }
-
-    return index;
-}
 
 bool Ray::outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
     // check bounds (right, top, left, bottom)
@@ -141,21 +130,6 @@ void Ray::setDir(const Vec2 &dir) {
     Ray::dir = dir;
 }
 
-float Ray::getLength(const nav_msgs::OccupancyGrid& inputGrid) {
-    // case: as long as possible - set to max_length = distance from Start to most outer corner of Grid
-    if(edge(occuGridFields.back(), inputGrid)){
-        return std::sqrt(((inputGrid.info.width - 1) / 2) * ((inputGrid.info.width - 1) / 2) + ((inputGrid.info.height - 1) * (inputGrid.info.height - 1)));
-    }
-
-    float horizontalLength = occuGridFields.back().getX() - start.getX();
-    float verticalLength = occuGridFields.back().getY() - start.getY();
-
-    return sqrtf(horizontalLength*horizontalLength + verticalLength*verticalLength);
-}
-
-Coordinate Ray::getCenter() {
-    return (occuGridFields.back() - start) / 2;
-}
 
 void Ray::setOccuGridFields(const nav_msgs::OccupancyGrid &inputGrid) {
     int curX = Ray::getStart().getX();  // current x coordinate
@@ -218,6 +192,35 @@ void Ray::getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int 
         *subDirCoordinate += decAbs(subDirNextSteps);
     }
 }
+
+float Ray::getLength(const nav_msgs::OccupancyGrid& inputGrid) {
+    // case: as long as possible - set to max_length = distance from Start to most outer corner of Grid
+    if(edge(occuGridFields.back(), inputGrid)){
+        return std::sqrt(((inputGrid.info.width - 1) / 2) * ((inputGrid.info.width - 1) / 2) + ((inputGrid.info.height - 1) * (inputGrid.info.height - 1)));
+    }
+
+    float horizontalLength = occuGridFields.back().getX() - start.getX();
+    float verticalLength = occuGridFields.back().getY() - start.getY();
+
+    return sqrtf(horizontalLength*horizontalLength + verticalLength*verticalLength);
+}
+
+Coordinate Ray::getCenter() {
+    return (occuGridFields.back() - start) / 2;
+}
+
+int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
+    // calculate index
+    int index = (field.getY() * grid.info.width) + field.getX();
+
+    // asked field is out of Bounds
+    if(index > grid.data.size()){
+        throw std::range_error("field in Ray::getCoordinateIndex() is out of Bounds");
+    }
+
+    return index;
+}
+
 
 
 
