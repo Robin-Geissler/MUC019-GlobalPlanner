@@ -206,7 +206,7 @@ float Ray::getLength(const nav_msgs::OccupancyGrid& inputGrid) {
 }
 
 Coordinate Ray::getCenter() {
-    return (occuGridFields.back() - start) / 2;
+    return (occuGridFields.back() + start) / 2;
 }
 
 int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid) {
