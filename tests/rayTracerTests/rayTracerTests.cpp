@@ -4,21 +4,21 @@
 
 
 TEST(RayTracer_InitTest, noError){
-    EXPECT_NO_THROW(RayTracer rayTracer = RayTracer(1,1,0););
+    EXPECT_NO_THROW(RayTracer rayTracer = RayTracer(1,3,3););
 }
 
 TEST(RayTracer_InitTest, correctInitVectorNumber_1){
-    RayTracer rayTracer = RayTracer(1,1,0);
+    RayTracer rayTracer = RayTracer(1,3,3);
     EXPECT_EQ(rayTracer.getRays().size(), 1);
 }
 
 TEST(RayTracer_InitTest, correctInitVectorNumber_4){
-    RayTracer rayTracer = RayTracer(4,1,0);
+    RayTracer rayTracer = RayTracer(4,3,3);
     EXPECT_EQ(rayTracer.getRays().size(), 4);
 }
 
 TEST(RayTracer_InitTest, correctInitVectors_1){
-    RayTracer rayTracer = RayTracer(1,1,0);
+    RayTracer rayTracer = RayTracer(1,3,3);
 
     EXPECT_NEAR(rayTracer.getRays().front().getDir().getX(), 0.0, 0.001);
     EXPECT_NEAR(rayTracer.getRays().front().getDir().getY(),1.0, 0.001);
@@ -26,7 +26,7 @@ TEST(RayTracer_InitTest, correctInitVectors_1){
 }
 
 TEST(RayTracer_InitTest, correctInitVectors_2){
-    RayTracer rayTracer = RayTracer(2,1,0);
+    RayTracer rayTracer = RayTracer(2,3,3);
 
     EXPECT_NEAR(rayTracer.getRays()[0].getDir().getX(), 1.0, 0.001);
     EXPECT_NEAR(rayTracer.getRays()[0].getDir().getY(),1.73205, 0.001);
@@ -35,7 +35,7 @@ TEST(RayTracer_InitTest, correctInitVectors_2){
 }
 
 TEST(RayTracer_InitTest, correctInitVectors_5){
-    RayTracer rayTracer = RayTracer(5,1,0);
+    RayTracer rayTracer = RayTracer(5,3,3);
 
     EXPECT_NEAR(rayTracer.getRays()[0].getDir().getX(), 1.73205, 0.001);
     EXPECT_NEAR(rayTracer.getRays()[0].getDir().getY(),1.0, 0.001);
@@ -76,7 +76,7 @@ TEST(Ray_SetOccuGridFields, getNextGridPoint){
 }
 
 TEST(RayTracer_GridTest, TestGrid_1){
-    RayTracer rayTracer = RayTracer(5,1,0);
+    RayTracer rayTracer = RayTracer(5,3,3);
 
     nav_msgs::OccupancyGrid grid;
     grid.info.resolution = 1.0;
@@ -97,7 +97,7 @@ TEST(RayTracer_GridTest, TestGrid_1){
 }
 
 TEST(RayTracer_GridTest, TestGrid_2){
-    RayTracer rayTracer = RayTracer(5,2,0);
+    RayTracer rayTracer = RayTracer(5,5,5);
 
     nav_msgs::OccupancyGrid grid;
     grid.info.resolution = 1.0;

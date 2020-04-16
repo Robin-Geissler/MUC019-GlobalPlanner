@@ -231,7 +231,23 @@ int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid
  *  Class RayTracer
  ********************************************************/
 
-RayTracer::RayTracer(int numberOfRays, int rayStartX, int rayStartY){
+RayTracer::RayTracer(int numberOfRays, int gridWidth, int gridHeight){
+
+    // init inputGrid
+    inputGrid.info.width = gridWidth;
+    inputGrid.info.height = gridHeight;
+    // init inputGrid data to 0
+    for(int i = 0; i < gridWidth * gridHeight; i++){
+        inputGrid.data.push_back(0);
+    }
+
+    // init outputGrid
+    outputGrid.info.width = gridWidth;
+    outputGrid.info.height = gridHeight;
+    // init outputGrid data to 0
+    for(int i = 0; i < gridWidth * gridHeight; i++){
+        outputGrid.data.push_back(0);
+    }
 
     // exception: numberOfRays is to low
     if(numberOfRays < 1){
@@ -257,16 +273,11 @@ RayTracer::RayTracer(int numberOfRays, int rayStartX, int rayStartY){
             }
         }
         // start is at bottom middle position
-        Ray ray(Coordinate(rayStartX, rayStartY),dir);
+        Ray ray(Coordinate((gridWidth - 1) / 2, 0),dir);
         rayVec.push_back(ray);
     }
     RayTracer::rays = rayVec;
 
-
-    // init inputGrid
-    // TODO
-    // init outputGrid
-    // TODO
 }
 
 const std::vector<Ray> &RayTracer::getRays() const {
