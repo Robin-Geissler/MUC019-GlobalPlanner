@@ -228,7 +228,7 @@ void Ray::getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int 
  *  Class RayTracer
  ********************************************************/
 
-RayTracer::RayTracer(int numberOfRays){
+RayTracer::RayTracer(int numberOfRays, int rayStartX, int rayStartY){
 
     // exception: numberOfRays is to low
     if(numberOfRays < 1){
@@ -253,8 +253,8 @@ RayTracer::RayTracer(int numberOfRays){
                 dir = dir * (1 / abs(dir.getY()));
             }
         }
-        // TODO read rayStart from occupancy grid info
-        Ray ray(Coordinate(RAYTRACER_RAY_START_X, RAYTRACER_RAY_START_Y),dir);
+        // start is at bottom middle position
+        Ray ray(Coordinate(rayStartX, rayStartY),dir);
         rayVec.push_back(ray);
     }
     RayTracer::rays = rayVec;
