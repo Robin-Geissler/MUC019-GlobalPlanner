@@ -316,8 +316,14 @@ const nav_msgs::OccupancyGrid &RayTracer::getOutputGrid() const {
     return outputGrid;
 }
 
-void RayTracer::setOutputGrid(const nav_msgs::OccupancyGrid &outputGrid) {
-    RayTracer::outputGrid = outputGrid;
+void RayTracer::setOutputGrid() {
+    // set all Points to 0
+    for(int i = 0; i < outputGrid.data.size(); i++){
+        outputGrid.data.data()[i] = 0;
+    }
+
+    // set the new output Point to 100
+    outputGrid.data.data()[Ray::getCoodinateIndex(getBestRay().getCenter(),outputGrid)] = 100;
 }
 
 

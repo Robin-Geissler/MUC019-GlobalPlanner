@@ -115,10 +115,18 @@ TEST(RayTracer_GridTest, TestGrid_2){
 
     rayTracer.setInputGrid(grid);
     Ray ray = rayTracer.getBestRay();
+    rayTracer.setOutputGrid();
 
     EXPECT_NEAR(ray.getLength(grid),4.472135, 0.001);
     EXPECT_NEAR(ray.getDir().getX(), -1.0, 0.001);
     EXPECT_NEAR(ray.getDir().getY(),1.73285, 0.001);
+    for(int i = 0; i < 25; i++){
+        if(i == 11){
+            EXPECT_EQ(rayTracer.getOutputGrid().data.at(i), 100);
+        } else{
+            EXPECT_EQ(rayTracer.getOutputGrid().data.at(i),0);
+        }
+    }
 }
 
 int main(int argc, char **argv){
