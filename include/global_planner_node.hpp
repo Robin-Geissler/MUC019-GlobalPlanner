@@ -17,8 +17,8 @@
 
 #include "rayTracer.hpp"
 
-#define STD_OCCU_GRID_WIDTH 35  //Width of the expected Occu Grids
-#define STD_OCCU_GRID_HEIGHT 35 //Height of the expected Occu Grids
+#define STD_OCCU_GRID_WIDTH 150  //Width of the expected Occu Grids
+#define STD_OCCU_GRID_HEIGHT 150 //Height of the expected Occu Grids
 
 namespace tufast_planner {
 
