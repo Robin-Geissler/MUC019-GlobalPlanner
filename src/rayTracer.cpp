@@ -231,6 +231,8 @@ int Ray::getCoodinateIndex(Coordinate field, const nav_msgs::OccupancyGrid& grid
  *  Class RayTracer
  ********************************************************/
 
+RayTracer::RayTracer() = default;
+
 RayTracer::RayTracer(int numberOfRays, int gridWidth, int gridHeight){
 
     // init inputGrid

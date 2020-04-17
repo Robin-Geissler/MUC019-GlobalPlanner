@@ -140,6 +140,8 @@ private:
 
 
 public:
+
+    RayTracer();
     /**
     * @brief: this is the Constructor for the RayTracer
     * It Constructs numberOfRays Rays.
