@@ -94,3 +94,14 @@ void GlobalPlannerNode::run() {
     }
 
 }
+
+void GlobalPlannerNode::addGrids(nav_msgs::OccupancyGrid *grid1, nav_msgs::OccupancyGrid grid2) {
+    // check height and width
+    if(grid1->info.height != grid2.info.height || grid1->info.width != grid2.info.width){
+        throw std::range_error("In GlobalPlannerNode::addGrids() grid width and height do not match");
+    }
+
+    for(int i = 0; i < grid1->data.size(); i++){
+        grid1->data.data()[i] += grid2.data.data()[i];
+    }
+}

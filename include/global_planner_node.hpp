@@ -17,6 +17,9 @@
 
 #include "rayTracer.hpp"
 
+#define STD_OCCU_GRID_WIDTH 35  //Width of the expected Occu Grids
+#define STD_OCCU_GRID_HEIGHT 35 //Height of the expected Occu Grids
+
 namespace tufast_planner {
 
 typedef enum e_MissionType {
@@ -46,6 +49,13 @@ class GlobalPlannerNode {
     void boundingBoxCallback(const jsk_recognition_msgs::BoundingBoxArray& msg);
     void occuGridMapCallback(const nav_msgs::OccupancyGrid& msg);
     void missionStatusCallback(const tufast_msgs::MissionStatus& msg);
+
+    /**
+     * @brief adds the grids, result will be saved in grid1
+     * @param grid1 pointer to first summand and output Grid
+     * @param grid2 second summand
+     */
+    void addGrids(nav_msgs::OccupancyGrid *grid1,nav_msgs::OccupancyGrid grid2);
 
   public:
     GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate);
