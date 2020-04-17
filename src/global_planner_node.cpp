@@ -85,7 +85,15 @@ void GlobalPlannerNode::boundingBoxCallback(const jsk_recognition_msgs::Bounding
 
 void GlobalPlannerNode::occuGridMapCallback(const nav_msgs::OccupancyGrid& msg) {
     ROS_INFO("Received a map");
-    // TODO
+    // check if grid width and height are correct
+    if(msg.info.width != STD_OCCU_GRID_WIDTH){
+        throw std::range_error("GlobalPlanner::occuGridMapCallback detected that STD_OCCU_GRID_WIDTH is set incorrectly" );
+    }
+    if(msg.info.height != STD_OCCU_GRID_HEIGHT){
+        throw std::range_error("GlobalPlanner::occuGridMapCallback detected that STD_OCCU_GRID_HEIGHT is set incorrectly" );
+    }
+
+    rayTracer.setInputGrid(msg);
 }
 
 void GlobalPlannerNode::missionStatusCallback(const tufast_msgs::MissionStatus& msg) {
