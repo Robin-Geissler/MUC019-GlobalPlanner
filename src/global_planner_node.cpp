@@ -49,6 +49,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
         ros::Duration(1.0).sleep();
         return;
     }
+
     // -----------------------------------------
     // publishers
     // ----------------------------------------
@@ -56,6 +57,22 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
     _pubGoalPoses = nh.advertise<tufast_msgs::GoalPoints>("goal_points", 1);
     _pubPath = nh.advertise<nav_msgs::Path>("path", 1);
 
+    // -----------------------------------------
+    // rayTracer
+    // ----------------------------------------
+
+    rayTracer = RayTracer(15,STD_OCCU_GRID_HEIGHT,STD_OCCU_GRID_WIDTH);
+
+    // -----------------------------------------
+    // output Grid
+    // ----------------------------------------
+
+    outputGrid.info.width = STD_OCCU_GRID_WIDTH;
+    outputGrid.info.height = STD_OCCU_GRID_HEIGHT;
+    // init outputGrid with 0
+    for(int i = 0; i < STD_OCCU_GRID_WIDTH *  STD_OCCU_GRID_HEIGHT; i++){
+        outputGrid.data.push_back(0);
+    }
 }
 
 
@@ -80,14 +97,29 @@ void GlobalPlannerNode::run() {
     // TODO
     while(ros::ok()) {
         // -----------------------------------------
-        // sensor fusion
+        // get sensor data
         // ----------------------------------------
 
+        // set Global Planner outputGrid to 0
+        for(int i = 0; i < outputGrid.data.size(); i++){
+            outputGrid.data.data()[i] = 0;
+        }
+
+        // set rayTracer outputGrid
+        rayTracer.setOutputGrid();
+        // TODO init more dataGrids here
+
+        // -----------------------------------------
+        // sensor fusion
+        // ----------------------------------------
+        // add RayTracer data
+        addGrids(&outputGrid,rayTracer.getOutputGrid());
+        // TODO add more dataGrids here
 
         // -----------------------------------------
         // challenge response
         // ----------------------------------------
-
+        // TODO publish the Goalpoints here
 
         ros::spinOnce();
         this->loop_rate.sleep();

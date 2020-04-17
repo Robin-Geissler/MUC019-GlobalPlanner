@@ -46,6 +46,10 @@ class GlobalPlannerNode {
 
     ros::Rate loop_rate;
 
+    RayTracer rayTracer;
+
+    nav_msgs::OccupancyGrid outputGrid;
+
     void boundingBoxCallback(const jsk_recognition_msgs::BoundingBoxArray& msg);
     void occuGridMapCallback(const nav_msgs::OccupancyGrid& msg);
     void missionStatusCallback(const tufast_msgs::MissionStatus& msg);
