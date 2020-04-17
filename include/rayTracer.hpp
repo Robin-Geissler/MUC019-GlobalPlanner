@@ -163,10 +163,11 @@ public:
     const nav_msgs::OccupancyGrid &getInputGrid() const;
 
     /**
-     * @brief updates the inputGrid, and sets occuGridFields for all Rays accordingly
+     * @brief updates the inputGrid
      * @param inputGrid the new inputGrid
      */
     void setInputGrid(const nav_msgs::OccupancyGrid &inputGrid);
+
     /**
      * @brief returns the output grid of the RayTracer
      * @return the outputGrid of the RayTracer
@@ -174,7 +175,7 @@ public:
     const nav_msgs::OccupancyGrid &getOutputGrid() const;
 
     /**
-     * @brief updates the outputGrid
+     * @brief sets occuGridFields for all Rays according to inputGrid and updates the outputGrid
      * sets middle Point of the best Ray to 100 everything else to 0
      */
     void setOutputGrid();

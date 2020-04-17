@@ -318,11 +318,6 @@ const nav_msgs::OccupancyGrid &RayTracer::getInputGrid() const {
 void RayTracer::setInputGrid(const nav_msgs::OccupancyGrid &inputGrid) {
     // update inputGrid
     RayTracer::inputGrid = inputGrid;
-
-    // update all Rays
-    for(auto & ray : rays){
-        ray.setOccuGridFields(inputGrid);
-    }
 }
 
 const nav_msgs::OccupancyGrid &RayTracer::getOutputGrid() const {
@@ -330,7 +325,12 @@ const nav_msgs::OccupancyGrid &RayTracer::getOutputGrid() const {
 }
 
 void RayTracer::setOutputGrid() {
-    // set all Points to 0
+    // update all Rays
+    for(auto & ray : rays){
+        ray.setOccuGridFields(inputGrid);
+    }
+
+    // set all Points in outputGrid to 0
     for(int i = 0; i < outputGrid.data.size(); i++){
         outputGrid.data.data()[i] = 0;
     }
@@ -338,6 +338,7 @@ void RayTracer::setOutputGrid() {
     // set the new output Point to 100
     outputGrid.data.data()[Ray::getCoodinateIndex(getBestRay().getCenter(),outputGrid)] = 100;
 }
+
 
 
 
