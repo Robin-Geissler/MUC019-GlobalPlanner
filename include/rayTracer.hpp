@@ -97,6 +97,12 @@ private:
      */
     static bool edge(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
+    /**
+     * @brief Checks if a field in grid is occupied
+     * @param field The grid coordinate that is to be checked
+     * @param grid The occupancy grid
+     * @return True if field is occupied false if not
+     */
     static bool occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
     /**
