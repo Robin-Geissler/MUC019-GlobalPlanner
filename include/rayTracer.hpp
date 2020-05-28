@@ -106,9 +106,9 @@ private:
     static bool occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
     /**
-     * @brief decreases abs of num by 1 and outputs the difference
-     * @param num the number that should be decreased
-     * @return the difference between the old and the new number
+     * @brief Decreases abs of num by 1 and outputs the difference
+     * @param num The number that should be decreased
+     * @return The difference between the old and the new number
      */
     int decAbs(float *num);
 
@@ -129,7 +129,7 @@ public:
 
     /**
      * @brief Calculates and sets the OccuGridFields of the Ray, depending on the inputGrid.
-     * The first GridPoint of the Ray will be its start Coordinate.
+     * @details The first GridPoint of the Ray will be its start Coordinate.
      * From that GridPoint on the algorithm will generally follow the dir of the Vector.
      * The in absolute bigger coordinate of dir will be the mainDirection.
      * The in absolute smaller coordinate of dir will be the subDirection.
@@ -147,17 +147,29 @@ public:
 
     // just public for testing for the moment
     /**
-     * @brief go´s into mainDir if possible, subDir else. Adjusts all Input accordingly.
-     * The next grid coordinate will be saved in mainDir Coordinate and subDirCoordinate
-     * @param mainDirNextSteps the number of steps that need to be taken in the mainDir
-     * @param subDirNextSteps the number of steps that need to be taken in the subDir
-     * @param mainDirCoordinate the current Coordinate of mainDir
-     * @param subDirCoordinate the current Coordinate of subDir
+     * @brief Go´s into mainDir if possible, subDir else.
+     * @details Adjusts all Input accordingly. The next grid coordinate will be saved in
+     * mainDir Coordinate and subDirCoordinate
+     * @param mainDirNextSteps The number of steps that need to be taken in the mainDir
+     * @param subDirNextSteps The number of steps that need to be taken in the subDir
+     * @param mainDirCoordinate The current Coordinate of mainDir
+     * @param subDirCoordinate The current Coordinate of subDir
      */
     void getNextGridPoint(float *mainDirNextSteps, float *subDirNextSteps, int *mainDirCoordinate, int *subDirCoordinate);
 
+    /**
+     * @brief Calculates the length of the ray
+     * @details If a ray exceeds the outputgrid, length will the maximum possible value (which is the
+     * diagonal length of the inputGrid).
+     * @param inputGrid
+     * @return
+     */
     float getLength(const nav_msgs::OccupancyGrid& inputGrid);
 
+    /**
+     * @brief Calculates the center position of the ray
+     * @returns The center Coordinate of the ray
+     */
     Coordinate getCenter();
 
     /**
@@ -185,7 +197,7 @@ public:
     /**
     * @brief This is the Constructor for the RayTracer.
     * It Constructs numberOfRays Rays.
-    * All Rays will start at RAYTRACER_RAY_START_X and RAYTRACER_RAY_START_Y.
+    * @details All Rays will start at RAYTRACER_RAY_START_X and RAYTRACER_RAY_START_Y.
     * Direction of the generated Rays:
     * The direction of the Rays will be equally distributed between 0 and 180 degrees.
     * 0 degrees and 180 degrees are not included.
@@ -204,7 +216,7 @@ public:
 
     /**
      * @brief Calculates the current best ray of the RayTracer.
-     * The value for all Rays will be calculated, the Ray with the best value will be returned.
+     * @details The value for all Rays will be calculated, the Ray with the best value will be returned.
      * The value of a ray is mainly set by its length.
      * There is a bonus on "how centered the ray is in the grid(straight direction is max bonus)".
      * The weight of that bonus can be set by the macro RAY_BOOST_SCALOR.
