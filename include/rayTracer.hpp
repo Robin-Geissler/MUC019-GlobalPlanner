@@ -89,6 +89,12 @@ private:
      */
     static bool outOfBounds(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
+    /**
+     * @brief Checks if the field is at an edge of the grid
+     * @param field The grid coordinate that is to be checked
+     * @param grid The occupancy grid
+     * @return True if field is on the grid edge false if not
+     */
     static bool edge(Coordinate field, const nav_msgs::OccupancyGrid& grid);
 
     static bool occupied(Coordinate field, const nav_msgs::OccupancyGrid& grid);
