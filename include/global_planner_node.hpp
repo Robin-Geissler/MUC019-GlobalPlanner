@@ -40,6 +40,7 @@ class GlobalPlannerNode {
 
     ros::Publisher _pubGoalPoses;
     ros::Publisher _pubPath;
+    ros::Publisher _pubControlStatus;
 
     geometry_msgs::Pose _currentPosition;
     MissionType         _currentMission;

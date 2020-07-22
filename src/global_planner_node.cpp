@@ -56,6 +56,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
 
     _pubGoalPoses = nh.advertise<tufast_msgs::GoalPoints>("goal_points", 1);
     _pubPath = nh.advertise<nav_msgs::Path>("path", 1);
+    _pubControlStatus = nh.advertise<tufast_msgs::ControlStatusMessage>("local_planner_data",1);
 
     // -----------------------------------------
     // rayTracer
