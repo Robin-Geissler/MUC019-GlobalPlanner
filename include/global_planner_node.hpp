@@ -44,11 +44,15 @@ class GlobalPlannerNode {
     geometry_msgs::Pose _currentPosition;
     MissionType         _currentMission;
 
-    ros::Rate loop_rate;
+    ros::Rate _loopRate;
 
-    RayTracer rayTracer;
+    RayTracer _rayTracer;
 
-    nav_msgs::OccupancyGrid outputGrid;
+    nav_msgs::OccupancyGrid _outputGrid;
+
+    /// represents the physical goal Point in m
+    float _goalPointX;
+    float _goalPointY;
 
     void boundingBoxCallback(const jsk_recognition_msgs::BoundingBoxArray& msg);
     void occuGridMapCallback(const nav_msgs::OccupancyGrid& msg);

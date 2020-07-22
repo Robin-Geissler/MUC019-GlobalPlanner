@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 
 
 GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
-        : _tfListener{_tfBuffer}, loop_rate(loop_rate) {
+        : _tfListener{_tfBuffer}, _loopRate(loop_rate) {
     
     // -----------------------------------------
     // subscribers
@@ -61,18 +61,24 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
     // rayTracer
     // ----------------------------------------
 
-    rayTracer = RayTracer(15,STD_OCCU_GRID_HEIGHT,STD_OCCU_GRID_WIDTH);
+    _rayTracer = RayTracer(15,STD_OCCU_GRID_HEIGHT,STD_OCCU_GRID_WIDTH);
 
     // -----------------------------------------
     // output Grid
     // ----------------------------------------
 
-    outputGrid.info.width = STD_OCCU_GRID_WIDTH;
-    outputGrid.info.height = STD_OCCU_GRID_HEIGHT;
+    _outputGrid.info.width = STD_OCCU_GRID_WIDTH;
+    _outputGrid.info.height = STD_OCCU_GRID_HEIGHT;
     // init outputGrid with 0
     for(int i = 0; i < STD_OCCU_GRID_WIDTH *  STD_OCCU_GRID_HEIGHT; i++){
-        outputGrid.data.push_back(0);
+        _outputGrid.data.push_back(0);
     }
+
+    // -----------------------------------------
+    // Goal Point
+    // ----------------------------------------
+    _goalPointX = 0;
+    _goalPointY = 0;
 }
 
 
@@ -93,7 +99,7 @@ void GlobalPlannerNode::occuGridMapCallback(const nav_msgs::OccupancyGrid& msg) 
         throw std::range_error("GlobalPlanner::occuGridMapCallback detected that STD_OCCU_GRID_HEIGHT is set incorrectly" );
     }
 
-    rayTracer.setInputGrid(msg);
+    _rayTracer.setInputGrid(msg);
 }
 
 void GlobalPlannerNode::missionStatusCallback(const tufast_msgs::MissionStatus& msg) {
@@ -120,19 +126,19 @@ void GlobalPlannerNode::run() {
         // ----------------------------------------
 
         // set Global Planner outputGrid to 0
-        for(int i = 0; i < outputGrid.data.size(); i++){
-            outputGrid.data.data()[i] = 0;
+        for(int i = 0; i < _outputGrid.data.size(); i++){
+            _outputGrid.data.data()[i] = 0;
         }
 
         // set rayTracer outputGrid
-        rayTracer.setOutputGrid();
+        _rayTracer.setOutputGrid();
         // TODO init more dataGrids here
 
         // -----------------------------------------
         // sensor fusion
         // ----------------------------------------
         // add RayTracer data
-        addGrids(&outputGrid,rayTracer.getOutputGrid());
+        addGrids(&_outputGrid, _rayTracer.getOutputGrid());
         // TODO add more dataGrids here
 
         // -----------------------------------------
@@ -142,7 +148,7 @@ void GlobalPlannerNode::run() {
         // TODO publish the Goalpoints here
 
         ros::spinOnce();
-        this->loop_rate.sleep();
+        this->_loopRate.sleep();
     }
 
 }
