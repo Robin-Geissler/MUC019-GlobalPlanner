@@ -118,6 +118,20 @@ void GlobalPlannerNode::addGrids(nav_msgs::OccupancyGrid *grid1, nav_msgs::Occup
     }
 }
 
+
+Coordinate GlobalPlannerNode::getGoalPoint(nav_msgs::OccupancyGrid outputGrid){
+    int outputVal = 0;
+    Coordinate outputGridPoint(0,0);
+    for(int i = 0; i < outputGrid.data.size(); i++){
+        if(outputGrid.data[i] > outputVal){
+            outputVal = outputGrid.data[i];
+            outputGridPoint.setX(i % outputGrid.info.width);
+            outputGridPoint.setY(i / outputGrid.info.width);
+        }
+    }
+    return outputGridPoint;
+}
+
 void GlobalPlannerNode::run() {
     // TODO
     while(ros::ok()) {
@@ -144,6 +158,7 @@ void GlobalPlannerNode::run() {
         // -----------------------------------------
         // challenge response
         // ----------------------------------------
+
         // get GoalPoints
         // TODO publish the Goalpoints here
 

@@ -65,6 +65,13 @@ class GlobalPlannerNode {
      */
     void addGrids(nav_msgs::OccupancyGrid *grid1,nav_msgs::OccupancyGrid grid2);
 
+    /**
+     * @brief calculatew the highest valued point of the output grid
+     * @param outputGrid the grid that is scanned
+     * @return the highest valued point
+     */
+    Coordinate getGoalPoint(nav_msgs::OccupancyGrid outputGrid);
+
   public:
     GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate);
     ~GlobalPlannerNode();
