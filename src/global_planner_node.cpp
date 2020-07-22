@@ -134,7 +134,16 @@ Coordinate GlobalPlannerNode::getGoalPoint(nav_msgs::OccupancyGrid outputGrid){
 }
 
 void GlobalPlannerNode::run() {
-    // TODO
+    // init Messages
+    tufast_msgs::GoalPoints goalPointMsg;
+    tufast_msgs::ControlStatusMessage controlStatusMsg;
+    nav_msgs::Path pathMsg;
+
+    // init help Coordinates
+    Coordinate newGoalPoint(0, 0);
+    float oldGoalPointX;
+    float oldGoalPointY;
+
     while(ros::ok()) {
         // -----------------------------------------
         // get sensor data
@@ -157,11 +166,51 @@ void GlobalPlannerNode::run() {
         // TODO add more dataGrids here
 
         // -----------------------------------------
-        // challenge response
+        // generate path data
         // ----------------------------------------
 
         // get GoalPoints
         // TODO publish the Goalpoints here
+        newGoalPoint = getGoalPoint(_outputGrid);
+        oldGoalPointX = _goalPointX;
+        oldGoalPointY = _goalPointY;
+
+        // calculate distance from Car Origin in m
+        _goalPointX = (float)(newGoalPoint.getX() * (int)STD_OCCU_GRID_RESOLUTION);
+        _goalPointY = (float)((newGoalPoint.getY() - (STD_OCCU_GRID_WIDTH/2)) * (int)STD_OCCU_GRID_RESOLUTION);
+
+        // set output GoalPoints msg
+        goalPointMsg.x.push_back(_goalPointX);
+        goalPointMsg.y.push_back(_goalPointY);
+
+        // set output Path msg
+        // TODO generate Path msg
+
+        // set output ControlStatus msg
+        controlStatusMsg.sx = _goalPointX;
+        controlStatusMsg.sy = _goalPointY;
+
+        // for big position changes set replan options
+        if(abs(_goalPointX - oldGoalPointX) > 0.5 ){
+            controlStatusMsg.replanLat = 1;
+        } else{
+            controlStatusMsg.replanLat = 0;
+        }
+
+        if(abs(_goalPointY - oldGoalPointY) > 0.5){
+            controlStatusMsg.replanLong = 1;
+        } else{
+            controlStatusMsg.replanLong = 0;
+        }
+
+        // -----------------------------------------
+        // publish path data
+        // ----------------------------------------
+
+        // publish msgs
+        _pubGoalPoses.publish(goalPointMsg);
+        // TODO add Path msg
+        _pubControlStatus.publish(controlStatusMsg);
 
         ros::spinOnce();
         this->_loopRate.sleep();

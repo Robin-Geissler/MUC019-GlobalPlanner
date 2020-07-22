@@ -19,6 +19,7 @@
 
 #define STD_OCCU_GRID_WIDTH 150  //Width of the expected Occu Grids
 #define STD_OCCU_GRID_HEIGHT 150 //Height of the expected Occu Grids
+#define STD_OCCU_GRID_RESOLUTION 0.1 // Resolution of the expected Occu Grid
 
 namespace tufast_planner {
 
@@ -78,6 +79,8 @@ class GlobalPlannerNode {
     ~GlobalPlannerNode();
 
     void run();
+
+
 };
 
 } // namespace tufast_planner
