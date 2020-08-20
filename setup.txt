@@ -2,8 +2,39 @@ Planning Setup:
 git clone git@gitlab.tufast.de:tufast-autonom/planning/global-planner.git
 git clone git@gitlab.tufast.de:tufast-autonom/simulation/gazebo-sim.git
 git checkout tufast-trajectory --> im gazebo-sim
-git branch muc018
 git clone git@gitlab.tufast.de:tufast-autonom/rosbase/tufast-msgs.git
-git colne git@gitlab.tufast.de:tufast-autonom/planning/costmap-2d.git
+git clone git@gitlab.tufast.de:tufast-autonom/planning/costmap-2d.git
 git clone git@gitlab.tufast.de:tufast-autonom/planning/trajectory-planner.git
 git branch muc018
+
+sudo apt-get update
+sudo apt-get install ros-melodic-jsk-recognition-msgs
+sudo apt-get install ros-melodic-tf2-sensor-msgs
+sudo apt-get install ros-melodic-voxel-grid
+sudo apt-get install ros-melodic-velodyne-gazebo-plugins
+sudo apt-get install ros-melodic-velodyne-description
+sudo apt-get install ros-melodic-map-server
+
+Check for all Dependencies with
+rosdep check --from-paths src
+
+sudo apt-get install libgtest-dev
+
+cd /usr/src/gtest
+sudo cmake CMakeLists.txt
+sudo make
+sudo cp *.a /usr/lib
+
+cd /usr/src/gmock
+sudo cmake CMakeLists.txt
+sudo make
+sudo cp *.a /usr/lib
+
+
+#############################################################################
+recomended to use catkintools for compiling:
+sudo apt-get install python-catkin-tools
+
+catkin init 
+catkin build
+
