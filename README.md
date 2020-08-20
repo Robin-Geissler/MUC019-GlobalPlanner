@@ -1,7 +1,8 @@
 # Global Planner
 This is the Tufast Global Planner. It's purpose is to interpret the observed sensor data, and use it to solve one of serveral pre defined drive tasks.
 ## General Architecture
-For more informationabout the Functionality: See the Wiki
+
+![Global Planner Architecture](GlobalPlannerArchitecture.svg)
 ## Missions
 The Global Planner can obtimize the Goal Point towards one of four Missions.
 ### Trackdrive Mode
