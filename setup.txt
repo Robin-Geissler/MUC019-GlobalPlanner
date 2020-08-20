@@ -1,0 +1,9 @@
+Planning Setup:
+git clone git@gitlab.tufast.de:tufast-autonom/planning/global-planner.git
+git clone git@gitlab.tufast.de:tufast-autonom/simulation/gazebo-sim.git
+git checkout tufast-trajectory --> im gazebo-sim
+git branch muc018
+git clone git@gitlab.tufast.de:tufast-autonom/rosbase/tufast-msgs.git
+git colne git@gitlab.tufast.de:tufast-autonom/planning/costmap-2d.git
+git clone git@gitlab.tufast.de:tufast-autonom/planning/trajectory-planner.git
+git branch muc018
