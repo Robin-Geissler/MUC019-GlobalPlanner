@@ -11,4 +11,8 @@
 
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find costmap_2d)/launch/tufast_costmap.rviz"/>
 
+    <node pkg="trajectory_planner" type="trajectory_planner_node" name="trajectory_planner" output="screen" respawn="false" respawn_delay="0">
+        <remap from="~costmap" to="/costmap_node/costmap/costmap"/>
+        <remap from="~goal_point" to="/global_planner/goal_points"/>
+    </node>
 </launch>

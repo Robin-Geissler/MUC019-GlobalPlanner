@@ -38,7 +38,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
 
     geometry_msgs::TransformStamped t;
     try {
-        t = _tfBuffer.lookupTransform("map", "base", ros::Time(0));
+        t = _tfBuffer.lookupTransform("map", "base", ros::Time::now(), ros::Duration(10.0));
         _currentPosition.position.x = t.transform.translation.x;
         _currentPosition.position.y = t.transform.translation.y;
         _currentPosition.position.z = t.transform.translation.z;
@@ -62,7 +62,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
     // rayTracer
     // ----------------------------------------
 
-    _rayTracer = RayTracer(15,STD_OCCU_GRID_HEIGHT,STD_OCCU_GRID_WIDTH);
+    _rayTracer = RayTracer(RAYTRACER_RAYNUMBER,STD_OCCU_GRID_HEIGHT,STD_OCCU_GRID_WIDTH);
 
     // -----------------------------------------
     // output Grid
@@ -94,10 +94,10 @@ void GlobalPlannerNode::occuGridMapCallback(const nav_msgs::OccupancyGrid& msg) 
     ROS_INFO("Received a map");
     // check if grid width and height are correct
     if(msg.info.width != STD_OCCU_GRID_WIDTH){
-        throw std::range_error("GlobalPlanner::occuGridMapCallback detected that STD_OCCU_GRID_WIDTH is set incorrectly" );
+        throw std::range_error("GlobalPlanner::occuGridMapCallback detected that STD_OCCU_GRID_WIDTH is not compatible with incoming grids" );
     }
     if(msg.info.height != STD_OCCU_GRID_HEIGHT){
-        throw std::range_error("GlobalPlanner::occuGridMapCallback detected that STD_OCCU_GRID_HEIGHT is set incorrectly" );
+        throw std::range_error("GlobalPlanner::occuGridMapCallback detected that STD_OCCU_GRID_HEIGHT is not compatible with incoming gridsy" );
     }
 
     _rayTracer.setInputGrid(msg);
@@ -167,6 +167,7 @@ void GlobalPlannerNode::run() {
 
         // -----------------------------------------
         // generate path data
+
         // ----------------------------------------
 
         // get GoalPoints
@@ -176,10 +177,16 @@ void GlobalPlannerNode::run() {
         oldGoalPointY = _goalPointY;
 
         // calculate distance from Car Origin in m
-        _goalPointX = (float)(newGoalPoint.getX() * (int)STD_OCCU_GRID_RESOLUTION);
-        _goalPointY = (float)((newGoalPoint.getY() - (STD_OCCU_GRID_WIDTH/2)) * (int)STD_OCCU_GRID_RESOLUTION);
+        // probably switch X and Y Corrdinate here
+        _goalPointX = (float)newGoalPoint.getX() * STD_OCCU_GRID_RESOLUTION;
+        _goalPointY = ((float)newGoalPoint.getY() - (((float)STD_OCCU_GRID_WIDTH - 1)/2)) * (float)STD_OCCU_GRID_RESOLUTION;
+        //ROS_INFO("%f \n %f",_goalPointX, _goalPointY);
 
         // set output GoalPoints msg
+        if(goalPointMsg.x.size() > 0 && goalPointMsg.y.size() > 0){
+        goalPointMsg.x.pop_back();
+        goalPointMsg.y.pop_back();
+        }
         goalPointMsg.x.push_back(_goalPointX);
         goalPointMsg.y.push_back(_goalPointY);
 
