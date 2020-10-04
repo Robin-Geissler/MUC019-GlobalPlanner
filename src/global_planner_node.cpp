@@ -201,7 +201,7 @@ void GlobalPlannerNode::run() {
         // -----------------------------------------
         // sensor fusion
         // ----------------------------------------
-
+        
         switch (_currentMission) {
             case TRACK_DRIVE:
                 // add RayTracer data
@@ -219,6 +219,9 @@ void GlobalPlannerNode::run() {
             case ROLLOUT:
                 // just stand still
                 break;
+            default:
+                ROS_INFO("No mission set. Choosing track drive");
+                addGrids(&_outputGrid, _rayTracer.getOutputGrid());
         }
 
         // -----------------------------------------
