@@ -336,7 +336,7 @@ void RayTracer::setOutputGrid() {
     }
 
     // set the new output Point to 100
-    outputGrid.data.data()[Ray::getCoodinateIndex(getBestRay().getCenter(),outputGrid)] = 100;
+    outputGrid.data.data()[Ray::getCoodinateIndex(getBestRay().getCenter(),outputGrid)] = 50;
 }
 
 

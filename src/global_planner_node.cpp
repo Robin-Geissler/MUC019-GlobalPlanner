@@ -201,9 +201,25 @@ void GlobalPlannerNode::run() {
         // -----------------------------------------
         // sensor fusion
         // ----------------------------------------
-        // add RayTracer data
-        addGrids(&_outputGrid, _rayTracer.getOutputGrid());
-        // TODO add more dataGrids here
+
+        switch (_currentMission) {
+            case TRACK_DRIVE:
+                // add RayTracer data
+                addGrids(&_outputGrid, _rayTracer.getOutputGrid());
+                break;
+            case PARKING:
+                // TODO Parking is still to be implemented
+                break;
+            case SLALOM:
+                // add RayTracer data
+                addGrids(&_outputGrid, _rayTracer.getOutputGrid());
+                // add BoundingBoxMapper data
+                addGrids(&_outputGrid,_boundingBoxMapper);
+                break;
+            case ROLLOUT:
+                // just stand still
+                break;
+        }
 
         // -----------------------------------------
         // generate path data
