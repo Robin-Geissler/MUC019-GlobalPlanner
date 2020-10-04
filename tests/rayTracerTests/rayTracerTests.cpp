@@ -124,7 +124,7 @@ TEST(RayTracer_GridTest, TestGrid_2){
     EXPECT_NEAR(ray.getDir().getY(),1.73285, 0.001);
     for(int i = 0; i < 25; i++){
         if(i == 11){
-            EXPECT_EQ(rayTracer.getOutputGrid().data.at(i), 100);
+            EXPECT_EQ(rayTracer.getOutputGrid().data.at(i), 50);
         } else{
             EXPECT_EQ(rayTracer.getOutputGrid().data.at(i),0);
         }
