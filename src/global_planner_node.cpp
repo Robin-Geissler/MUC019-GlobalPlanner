@@ -65,6 +65,12 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
     _rayTracer = RayTracer(RAYTRACER_RAYNUMBER,STD_OCCU_GRID_HEIGHT,STD_OCCU_GRID_WIDTH);
 
     // -----------------------------------------
+    // boundingBoxMapper
+    // ----------------------------------------
+
+    _boundingBoxMapper = initEmptyGrid();
+
+    // -----------------------------------------
     // output Grid
     // ----------------------------------------
 
@@ -82,7 +88,20 @@ GlobalPlannerNode::~GlobalPlannerNode() {}
 
 void GlobalPlannerNode::boundingBoxCallback(const jsk_recognition_msgs::BoundingBoxArray& msg) {
     ROS_INFO("Received a bounding box");
-    // TODO
+
+
+    if(msg.boxes.size() < 2){
+        // no two cones detected
+        // set all points to 0
+        setGridPoint(&_boundingBoxMapper);
+    }else{
+        // minimum two cones detected -> take the first two
+        Coordinate centerPoint((msg.boxes[0].pose.position.x - msg.boxes[1].pose.position.x)/2,(msg.boxes[0].pose.position.y - msg.boxes[1].pose.position.y)/2);
+        setGridPoint(&_boundingBoxMapper,centerPoint.getX(),centerPoint.getY(),100);
+    }
+
+
+
 }
 
 void GlobalPlannerNode::occuGridMapCallback(const nav_msgs::OccupancyGrid& msg) {
@@ -174,6 +193,9 @@ void GlobalPlannerNode::run() {
 
         // set rayTracer outputGrid
         _rayTracer.setOutputGrid();
+
+        // the _boundingBoxMapper is already set
+
         // TODO init more dataGrids here
 
         // -----------------------------------------

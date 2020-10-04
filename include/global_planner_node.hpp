@@ -49,6 +49,7 @@ class GlobalPlannerNode {
     ros::Rate _loopRate;
 
     RayTracer _rayTracer;
+    nav_msgs::OccupancyGrid _boundingBoxMapper;
 
     nav_msgs::OccupancyGrid _outputGrid;
 
