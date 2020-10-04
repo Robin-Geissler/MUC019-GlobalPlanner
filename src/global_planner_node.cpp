@@ -140,6 +140,17 @@ nav_msgs::OccupancyGrid GlobalPlannerNode::initEmptyGrid() {
     return grid;
 }
 
+void GlobalPlannerNode::setGridPoint(nav_msgs::OccupancyGrid *grid, int xPos, int yPos, float val) {
+    int index = yPos * grid->info.width + xPos;
+    for(int i = 0; i < grid->info.width * grid->info.height; i++){
+        if(i == index){
+            grid->data[i] = val;
+        }else{
+            grid->data[i] = 0;
+        }
+    }
+}
+
 void GlobalPlannerNode::run() {
     // init Messages
     tufast_msgs::GoalPoints goalPointMsg;
@@ -231,6 +242,8 @@ void GlobalPlannerNode::run() {
     }
 
 }
+
+
 
 
 

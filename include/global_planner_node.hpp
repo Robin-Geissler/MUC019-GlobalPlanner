@@ -80,6 +80,18 @@ class GlobalPlannerNode {
      * @return the empty grid
      */
     static nav_msgs::OccupancyGrid initEmptyGrid();
+
+    /**
+     * @brief sets one point in an OccupancyGrid
+     * @param grid a pointer to the grid
+     * @param xPos the x position of the point to set
+     * @param yPos the y position of the point to set
+     * @param val the value of the point
+     * @details the output grid will have the point set accordingly,
+     * all other points in the grid are set to 0
+     */
+    static void setGridPoint(nav_msgs::OccupancyGrid *grid, int xPos = 0, int yPos = 0, float val = 0);
+
   public:
     GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate);
     ~GlobalPlannerNode();
