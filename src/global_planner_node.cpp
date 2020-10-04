@@ -68,12 +68,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
     // output Grid
     // ----------------------------------------
 
-    _outputGrid.info.width = STD_OCCU_GRID_WIDTH;
-    _outputGrid.info.height = STD_OCCU_GRID_HEIGHT;
-    // init outputGrid with 0
-    for(int i = 0; i < STD_OCCU_GRID_WIDTH *  STD_OCCU_GRID_HEIGHT; i++){
-        _outputGrid.data.push_back(0);
-    }
+    _outputGrid = initEmptyGrid();
 
     // -----------------------------------------
     // Goal Point
@@ -131,6 +126,18 @@ Coordinate GlobalPlannerNode::getGoalPoint(nav_msgs::OccupancyGrid outputGrid){
         }
     }
     return outputGridPoint;
+}
+
+nav_msgs::OccupancyGrid GlobalPlannerNode::initEmptyGrid() {
+    nav_msgs::OccupancyGrid grid;
+    grid.info.width = STD_OCCU_GRID_WIDTH;
+    grid.info.height = STD_OCCU_GRID_HEIGHT;
+    // init outputGrid with 0
+    for(int i = 0; i < STD_OCCU_GRID_WIDTH *  STD_OCCU_GRID_HEIGHT; i++){
+        grid.data.push_back(0);
+    }
+
+    return grid;
 }
 
 void GlobalPlannerNode::run() {
@@ -224,5 +231,7 @@ void GlobalPlannerNode::run() {
     }
 
 }
+
+
 
 

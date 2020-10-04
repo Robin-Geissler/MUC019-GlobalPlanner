@@ -68,12 +68,18 @@ class GlobalPlannerNode {
     void addGrids(nav_msgs::OccupancyGrid *grid1,nav_msgs::OccupancyGrid grid2);
 
     /**
-     * @brief calculatew the highest valued point of the output grid
+     * @brief calculates the highest valued point of the output grid
      * @param outputGrid the grid that is scanned
      * @return the highest valued point
      */
     Coordinate getGoalPoint(nav_msgs::OccupancyGrid outputGrid);
 
+    /**
+     * @brief generates an empty OccupancyGrid
+     * @param
+     * @return the empty grid
+     */
+    static nav_msgs::OccupancyGrid initEmptyGrid();
   public:
     GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate);
     ~GlobalPlannerNode();
