@@ -53,6 +53,8 @@ class GlobalPlannerNode {
 
     nav_msgs::OccupancyGrid _outputGrid;
 
+    int _counter = 0;
+
     /// represents the physical goal Point in m
     float _goalPointX;
     float _goalPointY;

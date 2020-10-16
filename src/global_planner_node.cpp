@@ -54,7 +54,7 @@ GlobalPlannerNode::GlobalPlannerNode(ros::NodeHandle nh, ros::Rate loop_rate)
     // publishers
     // ----------------------------------------
 
-    _pubGoalPoses = nh.advertise<tufast_msgs::GoalPoints>("goal_points", 1);
+    _pubGoalPoses = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 1);
     _pubPath = nh.advertise<nav_msgs::Path>("path", 1);
     _pubControlStatus = nh.advertise<tufast_msgs::ControlStatusMessage>("local_planner_data",1);
 
@@ -172,7 +172,7 @@ void GlobalPlannerNode::setGridPoint(nav_msgs::OccupancyGrid *grid, int xPos, in
 
 void GlobalPlannerNode::run() {
     // init Messages
-    tufast_msgs::GoalPoints goalPointMsg;
+    geometry_msgs::PoseStamped goalPointMsg;
     tufast_msgs::ControlStatusMessage controlStatusMsg;
     nav_msgs::Path pathMsg;
 
@@ -242,13 +242,24 @@ void GlobalPlannerNode::run() {
         //ROS_INFO("%f \n %f",_goalPointX, _goalPointY);
 
         // set output GoalPoints msg
+        /*
         if(goalPointMsg.x.size() > 0 && goalPointMsg.y.size() > 0){
         goalPointMsg.x.pop_back();
         goalPointMsg.y.pop_back();
         }
         goalPointMsg.x.push_back(_goalPointX);
         goalPointMsg.y.push_back(_goalPointY);
+        */
 
+        goalPointMsg.header.seq = _counter++;
+        goalPointMsg.header.stamp = ros::Time::now();
+        goalPointMsg.header.frame_id = "map";
+        goalPointMsg.pose.position.x = _goalPointX;
+        goalPointMsg.pose.position.y = _goalPointY;
+        goalPointMsg.pose.orientation.x = 0;
+        goalPointMsg.pose.orientation.y = 0;
+        goalPointMsg.pose.orientation.z = 0;
+        goalPointMsg.pose.orientation.w = 1;
         // set output Path msg
         // TODO generate Path msg
 
